@@ -1,0 +1,27 @@
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.content {
+  margin-left: 220px;
+}
+
+.nav-link {
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  transition: background 0.3s;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-link.active {
+  background: #0d6efd;
+  color: white !important;
+}

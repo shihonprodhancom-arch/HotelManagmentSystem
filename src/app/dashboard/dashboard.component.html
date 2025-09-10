@@ -1,0 +1,58 @@
+<div class="dashboard-container">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <ul>
+      <li><a routerLink="/rooms">🏨 Rooms</a></li>
+      <li><a routerLink="/rooms/add">➕ Add Room</a></li>
+      <li><a routerLink="/booking">📖 Bookings</a></li>
+      <li><a routerLink="/payment">💳 Payments</a></li>
+      <li><a routerLink="/admin">⚙️ Admin</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="content-wrapper">
+    <!-- Left Welcome Section -->
+    <div class="welcome-section">
+      <h1>🏨 Grand Hotel</h1>
+      <p>Effortlessly manage rooms, bookings, guests, and payments.</p>
+      <img src="https://img.freepik.com/free-vector/hotel-booking-concept-illustration_114360-1510.jpg" alt="Hotel Illustration">
+    </div>
+
+    <!-- Right Dashboard Cards -->
+    <div class="dashboard-content">
+      <h2 class="title">📊 Dashboard Overview</h2>
+
+      <div class="card-grid">
+        <mat-card class="dashboard-card total-rooms" routerLink="/rooms">
+          <mat-card-title>Total Rooms</mat-card-title>
+          <mat-card-content>120</mat-card-content>
+        </mat-card>
+
+        <mat-card class="dashboard-card active-bookings" routerLink="/booking">
+          <mat-card-title>Active Bookings</mat-card-title>
+          <mat-card-content>85</mat-card-content>
+        </mat-card>
+
+        <mat-card class="dashboard-card guests" routerLink="/guests">
+          <mat-card-title>Guests</mat-card-title>
+          <mat-card-content>250</mat-card-content>
+        </mat-card>
+
+        <mat-card class="dashboard-card payments" routerLink="/payment">
+          <mat-card-title>Pending Payments</mat-card-title>
+          <mat-card-content>12</mat-card-content>
+        </mat-card>
+
+        <mat-card class="dashboard-card admin" routerLink="/admin">
+          <mat-card-title>Admin Panel</mat-card-title>
+          <mat-card-content>Manage Settings</mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  
+
+</div>

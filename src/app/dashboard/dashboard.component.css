@@ -1,0 +1,170 @@
+/* ==================== Navbar ==================== */
+.navbar {
+  background: #1a1a2e;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.navbar a:hover {
+  background: #16213e;
+}
+
+/* ==================== Layout ==================== */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* ==================== Welcome Section ==================== */
+.welcome-section {
+  flex: 1 1 300px;
+  text-align: center;
+  background: #f8f9fa;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.1);
+}
+
+.welcome-section img {
+  width: 80%;
+  margin-top: 20px;
+  border-radius: 12px;
+}
+
+/* ==================== Dashboard Cards ==================== */
+.dashboard-content {
+  flex: 2 1 500px;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.dashboard-card {
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Card Colors */
+.total-rooms { background: linear-gradient(135deg, #007bff, #0056b3); color: white; }
+.active-bookings { background: linear-gradient(135deg, #28a745, #1e7e34); color: white; }
+.guests { background: linear-gradient(135deg, #17a2b8, #117a8b); color: white; }
+.payments { background: linear-gradient(135deg, #dc3545, #a71d2a); color: white; }
+.admin { background: linear-gradient(135deg, #6f42c1, #4b0082); color: white; }
+
+/* ==================== Footer ==================== */
+.footer-gradient {
+  background: #1a1a2e;
+  color: white;
+  padding: 30px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+/* Left: Hotel Info */
+.footer-left {
+  flex: 1 1 200px;
+}
+
+.footer-left p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+/* Center: Circular Logo */
+.footer-center {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-center img {
+  width: 70%;
+}
+
+/* Right: Social Links */
+.footer-right {
+  flex: 1 1 200px;
+  text-align: right;
+}
+
+.footer-right a {
+  color: white;
+  margin-left: 10px;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.footer-right a:hover {
+  color: #f0ad4e;
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column;
+  }
+  .dashboard-content, .welcome-section {
+    flex: 1 1 100%;
+  }
+  .footer-gradient {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-right {
+    text-align: center;
+    margin-top: 10px;
+  }
+}

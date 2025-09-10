@@ -1,0 +1,60 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Admin Management</h2>
+
+  <!-- Form -->
+  <form (ngSubmit)="addOrUpdateAdmin(adminForm.value)" #adminForm="ngForm">
+    <div class="row">
+      <div class="col-md-3">
+        <input type="text" name="name" [(ngModel)]="admin.name" placeholder="Name" class="form-control" required>
+      </div>
+      <div class="col-md-3">
+        <input type="email" name="email" [(ngModel)]="admin.email" placeholder="Email" class="form-control" required>
+      </div>
+      <div class="col-md-2">
+        <select name="role" [(ngModel)]="admin.role" class="form-control" required>
+          <option value="" disabled>Select Role</option>
+          <option *ngFor="let r of roles" [value]="r">{{r}}</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <input type="password" name="password" [(ngModel)]="admin.password" placeholder="Password" class="form-control" required>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-success w-100">
+          {{ editingIndex !== null ? 'Update' : 'Add' }}
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Table -->
+  <table class="table table-bordered table-striped mt-4">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Password</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of admins; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{a.name}}</td>
+        <td>{{a.email}}</td>
+        <td>{{a.role}}</td>
+        <td>{{a.password}}</td>
+        <td>
+          <button class="btn btn-warning btn-sm" (click)="editAdmin(i)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteAdmin(i)">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="admins.length === 0">
+        <td colspan="6" class="text-center">No admin users found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

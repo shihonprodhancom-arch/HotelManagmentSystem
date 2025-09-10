@@ -1,0 +1,53 @@
+<form #roomForm="ngForm" (ngSubmit)="addRoom(roomForm.value)">
+  <div class="mb-3">
+    <label>Room Number</label>
+    <input type="number" class="form-control" name="number" ngModel required>
+  </div>
+
+  <div class="mb-3">
+    <label>Room Type</label>
+    <select class="form-select" name="type" ngModel required>
+      <option value="Single">Single</option>
+      <option value="Double">Double</option>
+      <option value="Suite">Suite</option>
+      <option value="AC Room">AC Room</option>
+      <option value="Non-AC Room">Non-AC Room</option>
+      <option value="Business Class">Business Class</option>
+      <option value="Family Room">Family Room</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label>Status</label>
+    <select class="form-select" name="status" ngModel required>
+      <option value="Available">Available</option>
+      <option value="Occupied">Occupied</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label>Price</label>
+    <input type="number" class="form-control" name="price" ngModel required>
+  </div>
+
+  <button class="btn btn-primary" type="submit">Add Room</button>
+</form>
+
+<table class="table mt-4">
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Type</th>
+      <th>Status</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let room of rooms">
+      <td>{{room.number}}</td>
+      <td>{{room.type}}</td>
+      <td>{{room.status}}</td>
+      <td>{{room.price}}</td>
+    </tr>
+  </tbody>
+</table>

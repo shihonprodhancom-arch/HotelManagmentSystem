@@ -1,0 +1,108 @@
+<div class="container mt-4">
+  <h2 class="mb-3 text-center">Payments Management</h2>
+
+  <!-- Add / Edit Payment Form -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white">
+      {{ editingIndex !== null ? 'Edit Payment' : 'Add Payment' }}
+    </div>
+    <div class="card-body">
+      <form #paymentForm="ngForm" (ngSubmit)="addOrUpdatePayment(payment)">
+        <div class="row g-3">
+
+          <!-- Guest Name -->
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Guest Name" [(ngModel)]="payment.guest" name="guest" required>
+          </div>
+
+          <!-- Amount -->
+          <div class="col-md-2">
+            <input type="number" class="form-control" placeholder="Amount" [(ngModel)]="payment.amount" name="amount" required>
+          </div>
+
+          <!-- Method -->
+          <div class="col-md-3">
+            <select class="form-select" [(ngModel)]="payment.method" name="method" required>
+              <option value="" disabled selected>Select Method</option>
+              <option *ngFor="let m of methods" [value]="m">{{ m }}</option>
+            </select>
+          </div>
+
+          <!-- Date -->
+          <div class="col-md-2">
+            <input type="date" class="form-control" [(ngModel)]="payment.date" name="date" required>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="col-md-2 d-grid">
+            <button type="submit" class="btn btn-success">
+              {{ editingIndex !== null ? 'Update Payment' : 'Add Payment' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Card specific fields -->
+        <div *ngIf="payment.method === 'Card'" class="row g-3 mt-3">
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Bank Name" [(ngModel)]="payment.bankName" name="bankName" required>
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Card Number" [(ngModel)]="payment.cardNumber" name="cardNumber" required>
+          </div>
+          <div class="col-md-4">
+            <input type="month" class="form-control" placeholder="Expiry Date" [(ngModel)]="payment.expiryDate" name="expiryDate" required>
+          </div>
+        </div>
+
+        <!-- Bkash / Nagad specific fields -->
+        <div *ngIf="payment.method === 'Bkash' || payment.method === 'Nagad'" class="row g-3 mt-3">
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Account Number" [(ngModel)]="payment.accountNumber" name="accountNumber" required>
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Transaction ID" [(ngModel)]="payment.transactionId" name="transactionId" required>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Total Amount -->
+  <div class="mb-3 text-end">
+    <h5>Total Amount: <span class="text-success">{{ totalAmount }}</span></h5>
+  </div>
+
+  <!-- Payments Cards -->
+  <div class="row">
+    <div class="col-md-4 mb-3" *ngFor="let p of payments; index as i">
+      <div class="card border-{{ getMethodColor(p.method) }} shadow-sm h-100">
+        <div class="card-header bg-{{ getMethodColor(p.method) }} text-white">
+          {{ p.method }} Payment
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ p.guest }}</h5>
+          <p class="card-text">
+            <strong>Amount:</strong> {{ p.amount }} <br>
+            <strong>Date:</strong> {{ p.date }} <br>
+
+            <!-- Show method details -->
+            <ng-container *ngIf="p.method === 'Card'">
+              <strong>Bank:</strong> {{ p.bankName }} <br>
+              <strong>Card No:</strong> {{ p.cardNumber }} <br>
+              <strong>Expiry:</strong> {{ p.expiryDate }}
+            </ng-container>
+
+            <ng-container *ngIf="p.method === 'Bkash' || p.method === 'Nagad'">
+              <strong>Account No:</strong> {{ p.accountNumber }} <br>
+              <strong>Transaction ID:</strong> {{ p.transactionId }}
+            </ng-container>
+          </p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+          <button class="btn btn-sm btn-warning" (click)="editPayment(i)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deletePayment(i)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
