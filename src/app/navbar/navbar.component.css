@@ -4,24 +4,39 @@
   position: fixed;
   left: 0;
   top: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .content {
-  margin-left: 220px;
+  margin-left: 220px; /* sidebar width অনুযায়ী */
 }
 
-.nav-link {
-  padding: 10px;
+/* Sidebar buttons */
+.nav-btn {
+  display: block;
+  width: 100%;
+  color: white;
+  text-align: left;
+  background-color: transparent;
+  border: 1px solid transparent;
   border-radius: 8px;
+  padding: 10px;
   margin-bottom: 5px;
-  transition: background 0.3s;
+  transition: 0.3s;
+  text-decoration: none;
 }
 
-.nav-link:hover {
-  background: rgba(255, 255, 255, 0.2);
+/* Hover effect */
+.nav-btn:hover {
+  background-color: #495057; /* dark gray hover */
+  border-color: #6c757d;
 }
 
-.nav-link.active {
-  background: #0d6efd;
-  color: white !important;
+/* Active route highlight */
+.nav-btn.active {
+  background-color: #198754; /* Bootstrap green */
+  border-color: #198754;
+  font-weight: bold;
+  color: #fff !important;
 }

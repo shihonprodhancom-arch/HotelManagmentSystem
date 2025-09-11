@@ -1,0 +1,32 @@
+.booking-card {
+  transition: transform 0.2s;
+}
+
+.booking-card:hover {
+  transform: scale(1.02);
+}
+
+.single { border-left: 5px solid #0d6efd; }
+.double { border-left: 5px solid #6f42c1; }
+.suite { border-left: 5px solid #fd7e14; }
+.ac { border-left: 5px solid #198754; }
+.nonac { border-left: 5px solid #dc3545; }
+.business { border-left: 5px solid #0dcaf0; }
+.family { border-left: 5px solid #ffc107; }
+
+.badge-room {
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-left: 5px;
+  padding: 0.25em 0.5em;
+  border-radius: 0.25rem;
+  color: white;
+}
+
+.badge-single { background-color: #0d6efd; }
+.badge-double { background-color: #6f42c1; }
+.badge-suite { background-color: #fd7e14; }
+.badge-ac { background-color: #198754; }
+.badge-nonac { background-color: #dc3545; }
+.badge-business { background-color: #0dcaf0; }
+.badge-family { background-color: #ffc107; color: black; }

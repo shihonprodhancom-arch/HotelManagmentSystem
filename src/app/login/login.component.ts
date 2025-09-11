@@ -7,23 +7,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
   constructor(private router: Router) {}
 
   login(formData: any) {
-    const userData = localStorage.getItem('user');
+    // ✅ Demo hardcoded login (তুমি চাইলে API দিয়ে মিলিয়ে নিতে পারো)
+    const demoEmail = "admin@example.com";
+    const demoPassword = "123456";
 
-    if (userData) {
-      const user = JSON.parse(userData);
-
-      if (user.email === formData.email && user.password === formData.password) {
-        alert("✅ Login Successful!");
-        this.router.navigate(['/dashboard']);
-      } else {
-        alert("❌ Invalid Email or Password!");
-      }
+    if (formData.email === demoEmail && formData.password === demoPassword) {
+      alert("✅ Login Successful!");
+      this.router.navigate(['/dashboard']);
     } else {
-      alert("❌ No registered user found. Please Register first.");
-      this.router.navigate(['/']);
+      alert("❌ Invalid Email or Password!");
     }
   }
 }

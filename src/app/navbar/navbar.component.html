@@ -1,32 +1,35 @@
 <div class="d-flex">
-  
+
   <!-- Sidebar -->
-  <nav class="sidebar bg-dark text-white p-3">
-    <h4 class="mb-4">🏨 Hotel</h4>
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/dashboard" routerLinkActive="active">📊 Dashboard</a>
+  <nav class="sidebar bg-dark text-white d-flex flex-column p-3">
+    <h4 class="mb-4 text-center">🏨 Hotel</h4>
+
+    <ul class="nav flex-column flex-grow-1">
+      <li class="nav-item mb-2">
+        <a class="nav-btn" routerLink="/dashboard" routerLinkActive="active">📊 Dashboard</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/rooms" routerLinkActive="active">🛏️ Rooms</a>
+      <li class="nav-item mb-2">
+        <a class="nav-btn" routerLink="/rooms" routerLinkActive="active">🛏️ Rooms</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/rooms/add" routerLinkActive="active">➕ Add Room</a>
+      <li class="nav-item mb-2">
+        <a class="nav-btn" routerLink="/rooms/add" routerLinkActive="active">➕ Add Room</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/booking" routerLinkActive="active">📅 Booking</a>
+      <li class="nav-item mb-2">
+        <a class="nav-btn" routerLink="/booking" routerLinkActive="active">📅 Booking</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/guests" routerLinkActive="active">👥 Guests</a>
+      <li class="nav-item mb-2">
+        <a class="nav-btn" routerLink="/guests" routerLinkActive="active">👥 Guests</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/payments" routerLinkActive="active">💳 Payments</a>
+      <li class="nav-item mb-2">
+        <a class="nav-btn" routerLink="/payments" routerLinkActive="active">💳 Payments</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/admin" routerLinkActive="active">⚙️ Admin</a>
+      <li class="nav-item mb-2">
+        <a class="nav-btn" routerLink="/admin" routerLinkActive="active">⚙️ Admin</a>
       </li>
     </ul>
-    <button class="btn btn-outline-light mt-3 w-100" (click)="logout()">Logout</button>
+
+    <!-- Logout button fixed bottom -->
+    <button class="btn btn-outline-light mt-auto w-100">Logout</button>
   </nav>
 
   <!-- Main Content -->
