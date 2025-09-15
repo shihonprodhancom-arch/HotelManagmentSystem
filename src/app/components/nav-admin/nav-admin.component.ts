@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-nav-admin',
+  templateUrl: './nav-admin.component.html',
+  styleUrls: ['./nav-admin.component.css']
 })
-export class DashboardComponent {
-
+export class NavAdminComponent {
   constructor(private router: Router) { }
 
   currentYear: number = new Date().getFullYear();
@@ -28,5 +27,4 @@ export class DashboardComponent {
   goToBookings() {
     this.router.navigate(['/booking']);
   }
-
 }

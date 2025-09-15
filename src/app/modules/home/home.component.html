@@ -1,0 +1,50 @@
+<!-- Hero / Banner Section -->
+<section class="hero d-flex align-items-center text-center text-white" [ngStyle]="{'background-image': 'url(' + hotel.banner + ')'}">
+  <div class="container">
+    <h1 class="display-3 fw-bold">🏨 {{ hotel.name }}</h1>
+    <p class="lead">Your Comfort, Our Priority</p>
+    <!-- 🔹 Login Button -->
+    <a routerLink="/login" class="btn btn-primary btn-lg mt-3">Login</a>
+  </div>
+</section>
+
+<!-- Hotel Information Section -->
+<section class="info py-5 bg-light" id="contact">
+  <div class="container">
+    <h2 class="text-center mb-4">About Our Hotel</h2>
+    <p class="text-center mb-5">
+      Welcome to <strong>{{ hotel.name }}</strong>, where luxury meets comfort.
+      We provide world-class rooms, premium services, and unforgettable experiences.
+    </p>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <ul class="list-group shadow">
+          <li class="list-group-item"><strong>📍 Location:</strong> {{ hotel.location }}</li>
+          <li class="list-group-item"><strong>📞 Phone:</strong> {{ hotel.phone }}</li>
+          <li class="list-group-item"><strong>📧 Email:</strong> {{ hotel.email }}</li>
+          <li class="list-group-item">
+            <strong>🌐 Facebook:</strong>
+            <a [href]="hotel.facebook" target="_blank">{{ hotel.facebook }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="footer bg-dark text-white py-4 mt-5">
+  <div class="container text-center">
+    <h5 class="fw-bold">🏨 {{ hotel.name }}</h5>
+    <p>{{ hotel.location }}</p>
+    <p>📞 {{ hotel.phone }} | 📧 {{ hotel.email }}</p>
+    <div class="social-links mb-2">
+      <a [href]="hotel.facebook" class="text-white me-3" target="_blank">
+        <i class="bi bi-facebook"></i> Facebook
+      </a>
+    </div>
+    <hr class="bg-light">
+    <p class="mb-0">&copy; 2025 {{ hotel.name }}. All rights reserved.</p>
+  </div>
+</footer>

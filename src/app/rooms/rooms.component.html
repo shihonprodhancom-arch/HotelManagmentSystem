@@ -1,25 +1,35 @@
-<div class="container mt-4">
-  <h2>Room List</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Room Number</th>
-        <th>Type</th>
-        <th>Status</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let room of rooms; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ room.number }}</td>
-        <td>{{ room.type }}</td>
-        <td>{{ room.status }}</td>
-        <td>{{ room.price }} ৳</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="rooms-container">
+  <h1>Our Rooms</h1>
 
-  <a routerLink="/rooms/add" class="btn btn-primary">+ Add New Room</a>
+  <!-- Room Group Cards -->
+  <div class="room-cards">
+    <div class="room-card" 
+         *ngFor="let group of roomGroups" 
+         (click)="viewGroupDetails(group)"
+         [ngClass]="group.type.toLowerCase()">
+      <h2>{{ group.type }} Rooms</h2>
+      <p>Total Rooms: {{ group.rooms.length }}</p>
+      <p>Starting Price: ৳{{ group.rooms[0].price }}</p>
+      <img [src]="group.rooms[0].image" alt="{{ group.type }} Room" class="room-card-img">
+      <button class="btn btn-info mt-2">View Details</button>
+    </div>
+  </div>
+
+  <!-- Room Details Modal -->
+  <div class="modal" *ngIf="selectedGroup">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeDetails()">&times;</span>
+      <h2>{{ selectedGroup.type }} Rooms Details</h2>
+
+      <div class="room-item" *ngFor="let room of selectedGroup.rooms">
+        <img [src]="room.image" alt="Room {{ room.number }}">
+        <div>
+          <h3>Room {{ room.number }}</h3>
+          <p>Price: ৳{{ room.price }}</p>
+          <p>Capacity: {{ room.capacity }} Person(s)</p>
+          <p>Services: {{ room.services.join(', ') }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

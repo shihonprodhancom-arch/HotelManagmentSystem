@@ -1,0 +1,42 @@
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  margin-left: 220px; /* sidebar width অনুযায়ী */
+}
+
+/* Sidebar buttons */
+.nav-btn {
+  display: block;
+  width: 100%;
+  color: white;
+  text-align: left;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 5px;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+/* Hover effect */
+.nav-btn:hover {
+  background-color: #495057; /* dark gray hover */
+  border-color: #6c757d;
+}
+
+/* Active route highlight */
+.nav-btn.active {
+  background-color: #198754; /* Bootstrap green */
+  border-color: #198754;
+  font-weight: bold;
+  color: #fff !important;
+}

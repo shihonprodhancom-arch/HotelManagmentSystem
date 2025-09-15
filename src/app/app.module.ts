@@ -6,8 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Components
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { RoomFormComponent } from './rooms/room-form/room-form.component';
 import { BookingComponent } from './booking/booking.component';
@@ -19,12 +17,13 @@ import { AdminComponent } from './admin/admin.component';
 import { MatCardModule } from '@angular/material/card';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
+import { NavAdminComponent } from './components/nav-admin/nav-admin.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    DashboardComponent,
     RoomsComponent,
     RoomFormComponent,
     BookingComponent,
@@ -32,7 +31,10 @@ import { LoginComponent } from './login/login.component';
     PaymentsComponent,
     AdminComponent,
     RegistrationComponent,
-    LoginComponent
+    LoginComponent,
+    HomepageComponent,
+    NavAdminComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

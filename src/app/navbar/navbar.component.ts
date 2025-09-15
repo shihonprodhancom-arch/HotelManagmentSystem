@@ -8,10 +8,4 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
 
-  constructor(private router: Router) { }
-
-  logout() {
-    localStorage.clear();
-    this.router.navigate(['/login']); // Make sure /login route exists
-  }
 }

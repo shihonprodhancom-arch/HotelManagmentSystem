@@ -7,41 +7,68 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoomsComponent implements OnInit {
 
-  rooms: any[] = [
-    { number: 101, type: 'Single', price: 2000, capacity: 1 },
-    { number: 102, type: 'Single', price: 2100, capacity: 1 },
-    { number: 103, type: 'Single', price: 2200, capacity: 1 },
-    { number: 104, type: 'Single', price: 2300, capacity: 1 },
-    { number: 105, type: 'Single', price: 2400, capacity: 1 },
-    { number: 106, type: 'Double', price: 3000, capacity: 2 },
-    { number: 107, type: 'Double', price: 3100, capacity: 2 },
-    { number: 108, type: 'Double', price: 3200, capacity: 2 },
-    { number: 109, type: 'Double', price: 3300, capacity: 2 },
-    { number: 110, type: 'Double', price: 3400, capacity: 2 },
-    { number: 111, type: 'Suite', price: 5000, capacity: 4 },
-    { number: 112, type: 'Suite', price: 5100, capacity: 4 },
-    { number: 113, type: 'Suite', price: 5200, capacity: 4 },
-    { number: 114, type: 'AC', price: 3500, capacity: 2 },
-    { number: 115, type: 'Non-AC', price: 2500, capacity: 2 },
-    { number: 116, type: 'Business', price: 4000, capacity: 3 },
-    { number: 117, type: 'Family', price: 4500, capacity: 5 }
-  ];
+  selectedGroup: any = null;
 
-  groupedRooms: any = {};
+  roomGroups = [
+    {
+      type: 'Single',
+      rooms: [
+        { number: 101, price: 2000, capacity: 1, services: ['WiFi', 'AC'], image: 'assets/img/download (1).jpg' },
+        { number: 102, price: 2100, capacity: 1, services: ['WiFi', 'AC'], image: 'assets/img/download (2).jpg' },
+        { number: 103, price: 2200, capacity: 1, services: ['WiFi', 'AC'], image: 'assets/img/download (3).jpg' },
+        { number: 104, price: 2300, capacity: 1, services: ['WiFi', 'AC'], image: 'assets/img/download (5).jpg' },
+      ]
+    },
+    {
+      type: 'Double',
+      rooms: [
+        { number: 201, price: 3000, capacity: 2, services: ['WiFi', 'AC', 'TV'], image: 'assets/img/markus-spiske-g5ZIXjzRGds-unsplash.jpg' },
+        { number: 202, price: 3100, capacity: 2, services: ['WiFi', 'AC', 'TV'], image: 'assets/img/manuel-moreno-DGa0LQ0yDPc-unsplash.jpg' },
+        { number: 203, price: 3200, capacity: 2, services: ['WiFi', 'AC', 'TV'], image: 'assets/img/gettyimages-1390233984-612x612.jpg' },
+        { number: 204, price: 3300, capacity: 2, services: ['WiFi', 'AC', 'TV'], image: 'assets/img/download (4).jpg' },
+        { number: 205, price: 3400, capacity: 2, services: ['WiFi', 'AC', 'TV'], image: 'assets/img/gettyimages-154945734-612x612.jpg' },
+      ]
+    },
+    {
+      type: 'Suite',
+      rooms: [
+        { number: 301, price: 5000, capacity: 4, services: ['WiFi', 'AC', 'TV', 'Mini Bar'], image: 'assets/img/gettyimages-1148452746-612x612.jpg' },
+        { number: 302, price: 5100, capacity: 4, services: ['WiFi', 'AC', 'TV', 'Mini Bar'], image: 'assets/img/gettyimages-1266155634-612x612.jpg' },
+        { number: 303, price: 5200, capacity: 4, services: ['WiFi', 'AC', 'TV', 'Mini Bar'], image: 'assets/img/gettyimages-1300135335-612x612.jpg' },
+      ]
+    },
+    {
+      type: 'Honeymoon',
+      rooms: [
+        { number: 401, price: 6000, capacity: 2, services: ['WiFi', 'AC', 'TV', 'Jacuzzi'], image: 'assets/img/download (6).jpg' },
+        { number: 402, price: 6200, capacity: 2, services: ['WiFi', 'AC', 'TV', 'Jacuzzi'], image: 'assets/img/gettyimages-1334117383-612x612.jpg' },
+      ]
+    },
+    {
+      type: 'Family',
+      rooms: [
+        { number: 501, price: 7000, capacity: 5, services: ['WiFi', 'AC', 'TV'], image: 'assets/img/gettyimages-1148452746-612x612.jpg' },
+        { number: 502, price: 7100, capacity: 5, services: ['WiFi', 'AC', 'TV'], image: 'assets/img/manuel-moreno-DGa0LQ0yDPc-unsplash.jpg' },
+      ]
+    },
+    {
+      type: 'VIP',
+      rooms: [
+        { number: 601, price: 12000, capacity: 3, services: ['WiFi', 'AC', 'TV', 'Mini Bar', 'Private Pool'], image: 'assets/img/gettyimages-1334117383-612x612.jpg' },
+        { number: 602, price: 12500, capacity: 3, services: ['WiFi', 'AC', 'TV', 'Mini Bar', 'Private Pool'], image: 'assets/img/gettyimages-1390233984-612x612.jpg' },
+      ]
+    },
+  ];
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.groupRoomsByType();
+  ngOnInit(): void {}
+
+  viewGroupDetails(group: any) {
+    this.selectedGroup = group;
   }
 
-  groupRoomsByType() {
-    this.groupedRooms = this.rooms.reduce((acc: any, room) => {
-      if (!acc[room.type]) {
-        acc[room.type] = [];
-      }
-      acc[room.type].push(room);
-      return acc;
-    }, {});
+  closeDetails() {
+    this.selectedGroup = null;
   }
 }

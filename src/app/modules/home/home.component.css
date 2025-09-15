@@ -1,0 +1,34 @@
+/* Hero Section with external banner image */
+.hero {
+  height: 80vh;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* dark overlay */
+}
+
+.hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Footer */
+.footer {
+  font-size: 0.9rem;
+}
+.footer a {
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer a:hover {
+  color: #ff9800;
+}
