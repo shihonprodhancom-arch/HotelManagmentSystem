@@ -18,22 +18,23 @@ const routes: Routes = [
 
   // 🔹 Auth Route
   { path: 'login', component: LoginComponent },
-   { path: 'sidebar', component: SidebarComponent, 
-    children:[
-{ path: 'dashboard', component: NavAdminComponent },
-  { path: 'rooms', component: RoomsComponent },
-  { path: 'rooms/add', component: RoomFormComponent },
-  { path: 'booking', component: BookingComponent },
-  { path: 'guests', component: GuestsComponent },
-  { path: 'payments', component: PaymentsComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
+  {
+    path: 'sidebar', component: SidebarComponent,
+    children: [
+      { path: 'dashboard', component: NavAdminComponent },
+      { path: 'rooms', component: RoomsComponent },
+      { path: 'rooms/add', component: RoomFormComponent },
+      { path: 'booking', component: BookingComponent },
+      { path: 'guests', component: GuestsComponent },
+      { path: 'payments', component: PaymentsComponent },
+      { path: 'admin', component: AdminComponent },
+      { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
 
     ]
-   },
+  },
 
   // 🔹 Dashboard & Features
-  
+
 
   // 🔹 Wildcard → redirect to home
   { path: '**', redirectTo: 'sidebar' }
@@ -44,6 +45,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule{
-  
+export class AppRoutingModule {
+
 }

@@ -1,72 +1,70 @@
 <div class="container mt-4">
-  <h3 class="mb-4 text-center">📅 Hotel Room Booking</h3>
+  <h2 class="mb-4">Hotel Bookings</h2>
 
   <!-- Booking Form -->
-  <div class="card mb-4 shadow-sm p-3">
-    <h5 class="mb-3">{{ editingIndex !== null ? 'Edit Booking' : 'New Booking' }}</h5>
-    <form (ngSubmit)="addOrUpdateBooking(booking)">
-      <div class="row g-3">
-        <div class="col-md-4 col-12">
-          <input type="text" class="form-control" placeholder="Guest Name" [(ngModel)]="booking.guest" name="guest" required>
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title">{{ editingBookingId ? 'Edit Booking' : 'Add Booking' }}</h5>
+      <form (ngSubmit)="addOrUpdateBooking(booking)">
+        <div class="row g-2">
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Guest Name" [(ngModel)]="booking.guest" name="guest">
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" [(ngModel)]="booking.room" name="room">
+              <option *ngFor="let room of rooms" [value]="room.number">{{ room.number }} - {{ room.type }}</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <input type="date" class="form-control" [(ngModel)]="booking.checkin" name="checkin">
+          </div>
+          <div class="col-md-2">
+            <input type="date" class="form-control" [(ngModel)]="booking.checkout" name="checkout">
+          </div>
+          <div class="col-md-1">
+            <input type="number" class="form-control" placeholder="Guests" [(ngModel)]="booking.guests" name="guests">
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">{{ editingBookingId ? 'Update' : 'Add' }}</button>
+          </div>
         </div>
-        <div class="col-md-4 col-12">
-          <input type="email" class="form-control" placeholder="Email" [(ngModel)]="booking.email" name="email">
-        </div>
-        <div class="col-md-4 col-12">
-          <select class="form-select" [(ngModel)]="booking.room" name="room" required>
-            <option value="">Select Room</option>
-            <option *ngFor="let room of rooms" [value]="room.number">
-              {{room.number}} ({{room.type}}) - {{room.price}} ৳/person
-            </option>
-          </select>
-        </div>
-      </div>
-
-      <div class="row g-3 mt-3">
-        <div class="col-md-3 col-6">
-          <input type="date" class="form-control" [(ngModel)]="booking.checkin" name="checkin" required>
-        </div>
-        <div class="col-md-3 col-6">
-          <input type="date" class="form-control" [(ngModel)]="booking.checkout" name="checkout" required>
-        </div>
-        <div class="col-md-2 col-6">
-          <input type="number" class="form-control" placeholder="Guests" [(ngModel)]="booking.guests" name="guests" min="1" required>
-        </div>
-        <div class="col-md-4 col-12 text-end">
-          <button type="submit" class="btn btn-success w-100">{{editingIndex !== null ? 'Update' : 'Add Booking'}}</button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 
   <!-- Booking Cards -->
   <div class="row g-3">
-    <div class="col-lg-4 col-md-6 col-12" *ngFor="let b of bookings; let i = index">
-      <div class="card shadow-sm h-100 p-3">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <h5 class="card-title">{{b.guest}}</h5>
-          <span class="badge" [ngClass]="{
-            'bg-success': b.status === 'Paid',
-            'bg-warning': b.status === 'Pending',
-            'bg-danger': b.status === 'Cancelled'
-          }">{{b.status}}</span>
+    <div class="col-md-4" *ngFor="let booking of bookings; let i = index">
+      <div class="card h-100 shadow-sm"
+           [ngClass]="{
+             'border-warning': booking.status === 'Pending',
+             'border-success': booking.status === 'Paid',
+             'border-danger': booking.status === 'Cancelled'
+           }">
+        <div class="card-header text-white"
+             [ngStyle]="{'background-color': booking.status === 'Pending' ? '#FFC107' : booking.status === 'Paid' ? '#28A745' : '#DC3545'}">
+          {{ booking.status }}
         </div>
-        <p class="mb-1"><strong>Room:</strong> {{b.room}} ({{b.roomType}})</p>
-        <p class="mb-1"><strong>Check-in:</strong> {{b.checkin | date:'shortDate'}}</p>
-        <p class="mb-1"><strong>Check-out:</strong> {{b.checkout | date:'shortDate'}}</p>
-        <p class="mb-1"><strong>Guests:</strong> {{b.guests}}</p>
-        <p class="mb-1"><strong>Total Price:</strong> {{b.price}} ৳</p>
-        <p class="mb-1" *ngIf="b.paymentMethod"><strong>Payment Method:</strong> {{b.paymentMethod}}</p>
-        <p class="mb-1" *ngIf="b.paymentInfo">
-          <strong>Payment Details:</strong> 
-          <span *ngIf="b.paymentInfo.bankName">Bank: {{b.paymentInfo.bankName}}, Account: {{b.paymentInfo.accountNumber}}</span>
-          <span *ngIf="b.paymentInfo.trxId">Transaction ID: {{b.paymentInfo.trxId}}</span>
-        </p>
-
-        <div class="mt-2 d-flex flex-wrap gap-1">
-          <button class="btn btn-sm btn-primary flex-grow-1" (click)="payBooking(i)" [disabled]="b.status === 'Paid'">Pay</button>
-          <button class="btn btn-sm btn-warning flex-grow-1" (click)="cancelBooking(i)" [disabled]="b.status === 'Cancelled'">Cancel</button>
-          <button class="btn btn-sm btn-success flex-grow-1" (click)="printReceipt(b)" [disabled]="b.status !== 'Paid'">Print Receipt</button>
+        <div class="card-body">
+          <h5 class="card-title">{{ booking.guestName }}</h5>
+          <p class="card-text">
+            <strong>Room:</strong> {{ booking.roomNumber }}<br>
+            <strong>Check-in:</strong> {{ booking.checkInDate }}<br>
+            <strong>Check-out:</strong> {{ booking.checkOutDate }}<br>
+            <strong>Total Price:</strong> {{ booking.totalPrice }} ৳<br>
+            <strong>Payment Method:</strong> {{ booking.paymentMethod || '-' }}
+          </p>
+        </div>
+        <div class="card-footer d-flex flex-wrap gap-2">
+          <button class="btn btn-success btn-sm"
+                  (click)="payBooking(i)"
+                  [disabled]="booking.status === 'Paid' || booking.status === 'Cancelled'">Pay</button>
+          <button class="btn btn-warning btn-sm"
+                  (click)="cancelBooking(i)"
+                  [disabled]="booking.status === 'Cancelled'">Cancel</button>
+          <button class="btn btn-info btn-sm" (click)="editBooking(booking)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteBooking(booking.id)">Delete</button>
+          <button class="btn btn-secondary btn-sm" (click)="printReceipt(booking)">Print</button>
         </div>
       </div>
     </div>

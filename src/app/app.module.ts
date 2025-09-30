@@ -20,13 +20,13 @@ import { LoginComponent } from './login/login.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { NavAdminComponent } from './components/nav-admin/nav-admin.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     RoomsComponent,
     RoomFormComponent,
-    BookingComponent,
     GuestsComponent,
     PaymentsComponent,
     AdminComponent,
@@ -34,7 +34,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     LoginComponent,
     HomepageComponent,
     NavAdminComponent,
-    SidebarComponent
+    SidebarComponent,
+    BookingComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +43,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

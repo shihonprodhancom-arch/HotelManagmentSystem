@@ -7,7 +7,6 @@ import { GuestsComponent } from './guests.component';
 
 @NgModule({
   declarations: [
-    GuestsComponent
   ],
   imports: [
     CommonModule,
