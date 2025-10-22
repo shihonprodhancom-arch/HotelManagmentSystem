@@ -8,12 +8,12 @@ import { RoomFormComponent } from './room-form/room-form.component';
 
 @NgModule({
   declarations: [
-    RoomsComponent,
-    RoomFormComponent
+    // RoomsComponent,
+    // RoomFormComponent
   ],
   imports: [
     CommonModule,
-    RoomsRoutingModule
+    // RoomsRoutingModule
   ]
 })
 export class RoomsModule { }

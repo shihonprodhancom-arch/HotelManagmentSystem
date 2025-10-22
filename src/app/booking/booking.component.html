@@ -2,7 +2,7 @@
   <h2 class="mb-4">Hotel Bookings</h2>
 
   <!-- Booking Form -->
-  <div class="card mb-4 shadow-sm">
+  <!-- <div class="card mb-4 shadow-sm">
     <div class="card-body">
       <h5 class="card-title">{{ editingBookingId ? 'Edit Booking' : 'Add Booking' }}</h5>
       <form (ngSubmit)="addOrUpdateBooking(booking)">
@@ -30,7 +30,102 @@
         </div>
       </form>
     </div>
+  </div> -->
+
+
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title">{{ editingBookingId ? 'Edit Booking' : 'Add Booking' }}</h5>
+      <form (ngSubmit)="addOrUpdateBooking(booking)">
+        <div class="row g-3">
+          <!-- Guest Name -->
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Guest Name" [(ngModel)]="booking.guest" name="guest" required>
+          </div>
+
+          <!-- Room Selection -->
+          <div class="col-md-3">
+            <select class="form-select" [(ngModel)]="booking.room" name="room" required (change)="updateRoomPrice()">
+              <option [ngValue]="room.number" *ngFor="let room of rooms">
+                {{ room.number }} - {{ room.type }} (৳{{ room.price }})
+              </option>
+            </select>
+          </div>
+
+          <!-- Number of Guests -->
+          <div class="col-md-2">
+            <input type="number" class="form-control" placeholder="Guests" [(ngModel)]="booking.guests" name="guests" min="1" required (input)="updateRoomPrice()">
+          </div>
+
+          <!-- Check-in -->
+          <div class="col-md-3">
+            <input type="date" class="form-control" [(ngModel)]="booking.checkin" name="checkin" required (change)="validateDates()">
+          </div>
+
+          <!-- Check-out -->
+          <div class="col-md-4">
+            <input type="date" class="form-control" [(ngModel)]="booking.checkout" name="checkout" required (change)="validateDates()">
+          </div>
+
+          <!-- Total Price (readonly) -->
+          <div class="col-md-4">
+            <input type="text" class="form-control" [value]="'৳' + (booking.totalPrice || 0)" readonly placeholder="Total Price">
+          </div>
+
+          <!-- Payment Method -->
+          <div class="col-md-4">
+            <select class="form-select" [(ngModel)]="booking.paymentMethod" name="paymentMethod">
+              <option value="" disabled selected>Select Payment</option>
+              <option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</option>
+            </select>
+          </div>
+
+<div class="row g-3 mt-3">
+  <div class="col-12">
+    <label class="form-label"><strong>Additional Services</strong></label>
   </div>
+
+  <div class="col-md-3" *ngFor="let service of extraServices">
+    <div class="form-check">
+      <!-- <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="isServiceSelected(service)"
+        (change)="toggleService(service, $event.target?.checked)"> -->
+
+<input
+  type="checkbox"
+  class="form-check-input"
+  #checkbox
+  [checked]="isServiceSelected(service)"
+  (change)="toggleService(service, checkbox.checked)">
+
+
+      <label class="form-check-label">
+        {{ service.name }} (+৳{{ service.price }})
+      </label>
+    </div>
+  </div>
+</div>
+
+
+
+          <!-- Submit Button -->
+          <div class="col-md-12">
+            <button type="submit" class="btn btn-primary w-100">
+              {{ editingBookingId ? 'Update Booking' : 'Add Booking' }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
 
   <!-- Booking Cards -->
   <div class="row g-3">

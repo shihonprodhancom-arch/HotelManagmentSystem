@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { BookingService, Booking } from '../services/booking.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-booking',
@@ -9,9 +10,35 @@ import { BookingService, Booking } from '../services/booking.service';
 })
 export class BookingComponent implements OnInit {
 
+  extraServices = [
+    { name: 'Breakfast', price: 500 },
+    { name: 'Airport Pickup', price: 1000 },
+    { name: 'Spa', price: 1500 },
+    { name: 'Extra Bed', price: 800 }
+  ];
+
+
   bookings: Booking[] = [];
-  booking: any = {};
+
+  // booking: any = {};
+
+  booking: any = {
+    guest: '',
+    room: null,
+    guests: 1,
+    checkin: '',
+    checkout: '',
+    totalPrice: 0,
+    paymentMethod: '',
+    selectedServices: []  // <- store selected extra services
+  };
+
+
+  // this.booking.selectedServices = booking.selectedServices || [];
+
+
   editingBookingId: number | null = null;
+  room: any;
 
   rooms = [
     { number: 101, type: 'Single', price: 2000 },
@@ -26,12 +53,72 @@ export class BookingComponent implements OnInit {
   paymentMethods: string[] = ['Bank', 'Bkash', 'Nagad'];
   paymentDetails: any = {};
 
-  constructor(private bookingService: BookingService) {}
+  constructor(private bookingService: BookingService, private router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    this.room = navigation?.extras.state?.['room'];
+    console.log(this.room); // You now have the room data
+  }
 
   ngOnInit(): void {
     this.loadBookings();
+
+    if (this.room) {
+      this.booking.room = this.room.number;
+      this.booking.guests = 1;
+      this.updateRoomPrice();
+    }
+  }
+  // updateRoomPrice() {
+  //   const selectedRoom = this.rooms.find(r => r.number == this.booking.room);
+  //   if (selectedRoom && this.booking.guests) {
+  //     this.booking.totalPrice = selectedRoom.price * this.booking.guests;
+  //   }
+  // }
+
+  // updateRoomPrice() {
+  //   const selectedRoom = this.rooms.find(r => r.number == this.booking.room);
+  //   const basePrice = selectedRoom ? selectedRoom.price * this.booking.guests : 0;
+
+  //   const extrasPrice = (this.booking.selectedServices || []).reduce(
+  //     (sum: number, service: any) => sum + service.price, 0
+  //   );
+
+  //   this.booking.totalPrice = basePrice + extrasPrice;
+  // }
+
+  isServiceSelected(service: any): boolean {
+    return this.booking.selectedServices.some((s: any) => s.name === service.name);
   }
 
+  // Toggle service selection
+  toggleService(service: any, checked: any) {
+    if (checked) {
+      this.booking.selectedServices.push(service);
+    } else {
+      this.booking.selectedServices = this.booking.selectedServices.filter(
+        (s: any) => s.name !== service.name
+      );
+    }
+    this.updateRoomPrice(); // recalculate total
+  }
+
+  updateRoomPrice() {
+    const selectedRoom = this.rooms.find(r => r.number == this.booking.room);
+    const basePrice = selectedRoom ? selectedRoom.price * this.booking.guests : 0;
+
+    const extrasPrice = (this.booking.selectedServices || []).reduce(
+      (sum: number, s: any) => sum + s.price, 0
+    );
+
+    this.booking.totalPrice = basePrice + extrasPrice;
+  }
+
+  validateDates() {
+    if (this.booking.checkin && this.booking.checkout && this.booking.checkin > this.booking.checkout) {
+      Swal.fire('Invalid Dates', 'Check-out date must be after check-in date', 'error');
+      this.booking.checkout = '';
+    }
+  }
   loadBookings(): void {
     this.bookingService.getAllBookings().subscribe((data: Booking[]) => {
       this.bookings = data.map(b => ({
@@ -97,7 +184,7 @@ export class BookingComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
-      if(result.isConfirmed){
+      if (result.isConfirmed) {
         this.bookingService.deleteBooking(id).subscribe(() => {
           Swal.fire('Deleted', 'Booking removed', 'success');
           this.loadBookings();
@@ -144,7 +231,7 @@ export class BookingComponent implements OnInit {
 
             this.bookingService.updateBooking(bookingToPay.id!, bookingToPay).subscribe(() => {
               console.log(bookingToPay);
-              
+
               Swal.fire('Paid!', `${method} Payment Completed`, 'success');
               this.loadBookings();
             });
@@ -164,26 +251,26 @@ export class BookingComponent implements OnInit {
     });
   }
 
-  getPaymentHtml(method: string){
-    if(method === 'Bank'){
+  getPaymentHtml(method: string) {
+    if (method === 'Bank') {
       return `
         <input id="bankName" class="swal2-input" placeholder="Bank Name">
         <input id="accountNumber" class="swal2-input" placeholder="Account Number">
       `;
-    } else if(method === 'Bkash' || method === 'Nagad'){
+    } else if (method === 'Bkash' || method === 'Nagad') {
       return `<input id="trxId" class="swal2-input" placeholder="Transaction ID">`;
     }
     return '';
   }
 
-  formatPaymentInfo(info: any){
-    if(!info) return '-';
-    if(info.bankName) return `Bank: ${info.bankName}, Account: ${info.accountNumber}`;
-    if(info.trxId) return `Transaction ID: ${info.trxId}`;
+  formatPaymentInfo(info: any) {
+    if (!info) return '-';
+    if (info.bankName) return `Bank: ${info.bankName}, Account: ${info.accountNumber}`;
+    if (info.trxId) return `Transaction ID: ${info.trxId}`;
     return '-';
   }
 
-  
+
   printReceipt(booking: Booking) {
     const receiptWindow = window.open('', 'PRINT', 'height=600,width=800');
     receiptWindow?.document.write(`

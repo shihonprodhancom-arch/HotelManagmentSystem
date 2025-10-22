@@ -1,43 +1,109 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
+// export interface Room {
+//   number: number;
+//   price: number;
+//   capacity: number;
+//   services: string[];
+//   image: string;
+// }
+
+// export interface RoomGroup {
+//   type: string;
+//   rooms: Room[];
+// }
+
+
+export interface Room {
+  id: number;
+  number: number;
+  price: number;
+  capacity: number;
+  services: string[];
+  image: string;
+}
+
+export interface RoomGroup {
+  id: number;
+  type: string;
+  rooms: Room[];
+}
 @Injectable({
   providedIn: 'root'
 })
-export class RoomsService {
-  rooms: any[] = [];
+export class RoomService {
 
-  constructor() {
-    // ২০টি fixed room
-    this.rooms = [
-      { number: 101, type: 'Single', status: 'Available', price: 1500, capacity: 1 },
-      { number: 102, type: 'Single', status: 'Available', price: 1500, capacity: 1 },
-      { number: 103, type: 'Double', status: 'Available', price: 2500, capacity: 2 },
-      { number: 104, type: 'Double', status: 'Available', price: 2500, capacity: 2 },
-      { number: 105, type: 'Suite', status: 'Available', price: 5000, capacity: 4 },
-      { number: 106, type: 'Suite', status: 'Available', price: 5000, capacity: 4 },
-      { number: 107, type: 'AC', status: 'Available', price: 3000, capacity: 2 },
-      { number: 108, type: 'AC', status: 'Available', price: 3000, capacity: 2 },
-      { number: 109, type: 'Non-AC', status: 'Available', price: 2000, capacity: 2 },
-      { number: 110, type: 'Non-AC', status: 'Available', price: 2000, capacity: 2 },
-      { number: 111, type: 'Business', status: 'Available', price: 4000, capacity: 3 },
-      { number: 112, type: 'Business', status: 'Available', price: 4000, capacity: 3 },
-      { number: 113, type: 'Family', status: 'Available', price: 6000, capacity: 5 },
-      { number: 114, type: 'Family', status: 'Available', price: 6000, capacity: 5 },
-      { number: 115, type: 'Single', status: 'Available', price: 1500, capacity: 1 },
-      { number: 116, type: 'Double', status: 'Available', price: 2500, capacity: 2 },
-      { number: 117, type: 'Suite', status: 'Available', price: 5000, capacity: 4 },
-      { number: 118, type: 'AC', status: 'Available', price: 3000, capacity: 2 },
-      { number: 119, type: 'Non-AC', status: 'Available', price: 2000, capacity: 2 },
-      { number: 120, type: 'Family', status: 'Available', price: 6000, capacity: 5 },
-    ];
+  private apiUrl = 'http://localhost:9092/api';
+
+  constructor(private http: HttpClient) { }
+
+  // Room Groups
+  getAllRoomGroups(): Observable<RoomGroup[]> {
+    return this.http.get<RoomGroup[]>(`${this.apiUrl}/room-groups`);
   }
 
-  getRooms() {
-    return this.rooms;
+  getRoomGroupByType(type: string): Observable<RoomGroup> {
+    return this.http.get<RoomGroup>(`${this.apiUrl}/room-groups/type/${type}`);
   }
 
-  setRoomStatus(roomNumber: number, status: string) {
-    const room = this.rooms.find(r => r.number === roomNumber);
-    if (room) room.status = status;
+  getRoomGroupById(id: number): Observable<RoomGroup> {
+    return this.http.get<RoomGroup>(`${this.apiUrl}/room-groups/${id}`);
   }
+
+  // Rooms
+  getAllRooms(): Observable<Room[]> {
+    return this.http.get<Room[]>(`${this.apiUrl}/rooms`);
+  }
+
+  getRoomById(id: number): Observable<Room> {
+    return this.http.get<Room>(`${this.apiUrl}/rooms/${id}`);
+  }
+
+  getRoomByNumber(number: number): Observable<Room> {
+    return this.http.get<Room>(`${this.apiUrl}/rooms/number/${number}`);
+  }
+
+  getRoomsByGroupType(type: string): Observable<Room[]> {
+    return this.http.get<Room[]>(`${this.apiUrl}/rooms/group/${type}`);
+  }
+
+  searchRooms(maxPrice?: number, minCapacity?: number, services?: string[]): Observable<Room[]> {
+    let params = new HttpParams();
+    if (maxPrice) params = params.set('maxPrice', maxPrice.toString());
+    if (minCapacity) params = params.set('minCapacity', minCapacity.toString());
+    if (services && services.length > 0) {
+      services.forEach(service => params = params.append('services', service));
+    }
+    
+    return this.http.get<Room[]>(`${this.apiUrl}/rooms/search`, { params });
+  }
+
+  createRoom(room: Room): Observable<Room> {
+    return this.http.post<Room>(`${this.apiUrl}/rooms`, room);
+  }
+
+  updateRoom(id: number, room: Room): Observable<Room> {
+    return this.http.put<Room>(`${this.apiUrl}/rooms/${id}`, room);
+  }
+
+  deleteRoom(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/rooms/${id}`);
+  }
+  // private apiUrl = 'http://localhost:8080/api/rooms';
+
+  // constructor(private http: HttpClient) { }
+
+  // getAllRoomGroups(): Observable<RoomGroup[]> {
+  //   return this.http.get<RoomGroup[]>(`${this.apiUrl}/groups`);
+  // }
+
+  // getRoomsByType(type: string): Observable<RoomGroup[]> {
+  //   return this.http.get<RoomGroup[]>(`${this.apiUrl}/groups/${type}`);
+  // }
+
+  // getRoomByNumber(roomNumber: number): Observable<Room> {
+  //   return this.http.get<Room>(`${this.apiUrl}/${roomNumber}`);
+  // }
 }
