@@ -1,18 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-room-form',
   templateUrl: './room-form.component.html',
   styleUrls: ['./room-form.component.css']
 })
-export class RoomFormComponent {
-  rooms = [
-    { number: 101, type: 'Single', status: 'Available', price: 2000 },
-    { number: 102, type: 'Double', status: 'Occupied', price: 3500 },
-    { number: 103, type: 'Suite', status: 'Available', price: 6000 }
-  ];
+export class RoomFormComponent implements OnInit {
+  rooms: any[] = [];
 
-  addRoom(roomData: any) {
-    this.rooms.push(roomData);
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.loadRooms();
+  }
+
+  loadRooms() {
+    this.http.get<any[]>('http://localhost:9092/api/rooms') // তোমার backend URL
+      .subscribe(data => {
+        this.rooms = data;
+      });
+  }
+
+  bookRoom(room: any) {
+    if (room.status === 'Available') {
+      this.http.post(`http://localhost:9092/api/book/${room.id}`, {})
+        .subscribe(() => {
+          room.status = 'Occupied'; // UI update
+          alert(`Room ${room.number} booked successfully!`);
+        }, err => {
+          console.error(err);
+          alert('Booking failed!');
+        });
+    }
   }
 }

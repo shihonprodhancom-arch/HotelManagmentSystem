@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -7,15 +8,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent {
-  constructor(private router: Router) {}
 
-  register(formData: any) {
-    console.log("User Registered:", formData);
+  formData = { name: '', email: '', password: '' };
+  loading = false;
 
-    // localStorage এ ডাটা সেভ
-    localStorage.setItem('user', JSON.stringify(formData));
+  constructor(private authService: AuthService, private router: Router) {}
 
-    alert("✅ Registration Successful! Please login.");
-    this.router.navigate(['/login']);
+  register() {
+    this.loading = true;
+
+    this.authService.register(this.formData).subscribe({
+      next: () => {
+        alert('✅ Registration successful! Please login.');
+        this.router.navigate(['/login']);
+        this.loading = false;
+      },
+      error: (err) => {
+        alert('❌ Registration failed: ' + err.error);
+        this.loading = false;
+      }
+    });
   }
 }

@@ -1,34 +1,17 @@
-<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
-  <div class="card p-4 shadow-lg" style="width: 400px;">
-    <h3 class="text-center mb-3">📝 User Registration</h3>
+<div class="registration-container">
+  <h2>Register</h2>
+  <form (ngSubmit)="register()">
+    <label>Name:</label>
+    <input type="text" [(ngModel)]="formData.name" name="name" required />
 
-    <form #regForm="ngForm" (ngSubmit)="register(regForm.value)">
-      <div class="mb-3">
-        <label>Name</label>
-        <input type="text" name="name" class="form-control" ngModel required>
-      </div>
+    <label>Email:</label>
+    <input type="email" [(ngModel)]="formData.email" name="email" required />
 
-      <div class="mb-3">
-        <label>Email</label>
-        <input type="email" name="email" class="form-control" ngModel required>
-      </div>
+    <label>Password:</label>
+    <input type="password" [(ngModel)]="formData.password" name="password" required />
 
-      <div class="mb-3">
-        <label>Phone Number</label>
-        <input type="tel" name="phone" class="form-control" ngModel required pattern="[0-9]{11}">
-      </div>
-
-      <div class="mb-3">
-        <label>Password</label>
-        <input type="password" name="password" class="form-control" ngModel required minlength="4">
-      </div>
-
-      <button class="btn btn-primary w-100" type="submit">Register</button>
-    </form>
-
-    <p class="text-center mt-3">
-      Already registered? 
-      <a routerLink="/login">Login here</a>
-    </p>
-  </div>
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Registering...' : 'Register' }}
+    </button>
+  </form>
 </div>

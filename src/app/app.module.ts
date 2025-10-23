@@ -21,6 +21,7 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { NavAdminComponent } from './components/nav-admin/nav-admin.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomepageComponent,
     NavAdminComponent,
     SidebarComponent,
-    BookingComponent
+    BookingComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

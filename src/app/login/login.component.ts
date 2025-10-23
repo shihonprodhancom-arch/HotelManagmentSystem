@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,18 +9,25 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  constructor(private router: Router) {}
+  formData = { email: '', password: '' };
+  loading = false;
 
-  login(formData: any) {
-    // ✅ Demo hardcoded login (তুমি চাইলে API দিয়ে মিলিয়ে নিতে পারো)
-    const demoEmail = "shihonprodhan.com@gmail.com";
-    const demoPassword = "123456";
+  constructor(private authService: AuthService, private router: Router) {}
 
-    if (formData.email === demoEmail && formData.password === demoPassword) {
-      alert("✅ Login Successful!");
-      this.router.navigate(['/sidebar']);
-    } else {
-      alert("❌ Invalid Email or Password!");
-    }
+  login() {
+    this.loading = true;
+
+    this.authService.login(this.formData).subscribe({
+      next: (res) => {
+        this.authService.saveToken(res.token);
+        alert('✅ Login successful!');
+        this.router.navigate(['/sidebar']); // sidebar বা dashboard route
+        this.loading = false;
+      },
+      error: () => {
+        alert('❌ Invalid Email or Password!');
+        this.loading = false;
+      }
+    });
   }
 }
