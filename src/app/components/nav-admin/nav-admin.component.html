@@ -1,51 +1,276 @@
 <div class="dashboard-container">
-
-  <!-- Main Content -->
-  <div class="content-wrapper">
-    <!-- Left Welcome Section -->
-    <div class="welcome-section">
-      <h1>🏨 SK Grand Hotel</h1>
-      <p>Effortlessly manage rooms, bookings, guests, and payments.</p>
-      <img src="https://img.freepik.com/free-vector/hotel-booking-concept-illustration_114360-1510.jpg" alt="Hotel Illustration" class="welcome-img">
-    </div>
-
-    <!-- Right Dashboard Cards -->
-    <div class="dashboard-content">
-      <h2 class="title">📊 Dashboard Overview</h2>
-
-      <div class="card-grid">
-
-        <mat-card class="dashboard-card total-rooms" routerLink="/rooms">
-          <img src="assets/img/download (3).jpg" alt="Rooms Icon" class="card-img">
-          <mat-card-title>Total Rooms</mat-card-title>
-          <mat-card-content>120</mat-card-content>
-        </mat-card>
-
-        <mat-card class="dashboard-card active-bookings" routerLink="/booking">
-          <img src="assets/img/download (6).jpg" alt="Booking Icon" class="card-img">
-          <mat-card-title>Active Bookings</mat-card-title>
-          <mat-card-content>85</mat-card-content>
-        </mat-card>
-
-        <mat-card class="dashboard-card guests" routerLink="/guests">
-          <img src="assets/img/gettyimages-1148452746-612x612.jpg" alt="Guests Icon" class="card-img">
-          <mat-card-title>Guests</mat-card-title>
-          <mat-card-content>250</mat-card-content>
-        </mat-card>
-
-        <mat-card class="dashboard-card payments" routerLink="/payments">
-          <img src="assets/img/gettyimages-1300135335-612x612.jpg" alt="Payments Icon" class="card-img">
-          <mat-card-title>Pending Payments</mat-card-title>
-          <mat-card-content>12</mat-card-content>
-        </mat-card>
-
-        <mat-card class="dashboard-card admin" routerLink="/admin">
-          <img src="assets/img/WhatsApp Image 2025-09-01 at 10.26.04_aa9e151b.jpg" alt="Admin Icon" class="card-img">
-          <mat-card-title>Admin Panel</mat-card-title>
-          <mat-card-content>Manage Settings</mat-card-content>
-        </mat-card>
-
+  <!-- Header Section -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <div class="hotel-brand">
+        <div class="hotel-logo">
+          <span class="logo-icon">🏨</span>
+        </div>
+        <div class="hotel-info">
+          <h1 class="hotel-name">SK Grand Hotel</h1>
+          <p class="hotel-tagline">Luxury Redefined, Comfort Guaranteed</p>
+        </div>
+      </div>
+      <div class="header-stats">
+        <div class="stat-item">
+          <span class="stat-number">{{ dashboardStats.occupancyRate }}%</span>
+          <span class="stat-label">Occupancy</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ dashboardStats.hotelRating }}</span>
+          <span class="stat-label">Rating</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ getOccupancyPercentage() }}%</span>
+          <span class="stat-label">Booked</span>
+        </div>
       </div>
     </div>
+  </div>
+
+  <!-- Main Dashboard Content -->
+  <div class="dashboard-main">
+    
+    <!-- Welcome Hero Section -->
+    <div class="welcome-hero">
+      <div class="hero-background">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+             alt="Luxury Hotel Lobby" 
+             class="hero-bg-image">
+      </div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <!-- <h1>Welcome to Your Dashboard</h1>
+          <p class="hero-description">
+            Manage your hotel operations efficiently with real-time insights and powerful tools. 
+            Everything you need to run your hotel smoothly is right here.
+          </p> -->
+          <div class="hero-stats">
+            <!-- <div class="hero-stat">
+              <span class="hero-stat-number">{{ dashboardStats.totalRooms }}</span>
+              <span class="hero-stat-label">Total Rooms</span>
+            </div> -->
+            <!-- <div class="hero-stat">
+              <span class="hero-stat-number">{{ dashboardStats.activeBookings }}</span>
+              <span class="hero-stat-label">Active Bookings</span>
+            </div> -->
+            <!-- <div class="hero-stat">
+              <span class="hero-stat-number">{{ dashboardStats.totalRevenue }}</span>
+              <span class="hero-stat-label">Monthly Revenue</span>
+            </div> -->
+            <!-- <div class="hero-stat">
+              <span class="hero-stat-number">{{ dashboardStats.currentGuests }}</span>
+              <span class="hero-stat-label">Current Guests</span>
+            </div> -->
+          </div>
+          <div class="hero-actions">
+            <!-- <button class="btn-primary" (click)="onQuickAction('booking')">
+              <span class="btn-icon">📅</span>
+              New Booking
+            </button> -->
+            <!-- <button class="btn-secondary" (click)="onQuickAction('rooms')">
+              <span class="btn-icon">🛏️</span>
+              Manage Rooms
+            </button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions-section">
+      <div class="container">
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="actions-grid">
+          <div class="action-card" (click)="onQuickAction('rooms')">
+            <div class="action-image">
+              <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Rooms">
+            </div>
+            <div class="action-content">
+              <h3>Manage Rooms</h3>
+              <p>View and manage all rooms</p>
+            </div>
+          </div>
+          
+          <div class="action-card" (click)="onQuickAction('booking')">
+            <div class="action-image">
+              <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Booking">
+            </div>
+            <div class="action-content">
+              <h3>New Booking</h3>
+              <p>Create new reservation</p>
+            </div>
+          </div>
+          
+          <div class="action-card" (click)="onQuickAction('guests')">
+            <div class="action-image">
+              <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Guests">
+            </div>
+            <div class="action-content">
+              <h3>Guest Check-in</h3>
+              <p>Manage guest arrivals</p>
+            </div>
+          </div>
+          
+          <div class="action-card" (click)="onQuickAction('payments')">
+            <div class="action-image">
+              <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Payments">
+            </div>
+            <div class="action-content">
+              <h3>Process Payments</h3>
+              <p>Handle payments & invoices</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Cards Grid -->
+    <div class="dashboard-section">
+      <div class="container">
+        <h2 class="section-title">Hotel Overview</h2>
+        <div class="cards-grid">
+          
+          <!-- Total Rooms Card -->
+          <div class="dashboard-card room-card" (click)="onQuickAction('rooms')">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                   alt="Luxury Room">
+            </div>
+            <div class="card-content">
+              <div class="card-icon">🛏️</div>
+              <h3 class="card-title">Total Rooms</h3>
+              <div class="card-main-value">{{ dashboardStats.totalRooms }}</div>
+              <div class="card-subtext">{{ dashboardStats.availableRooms }} Available</div>
+              <div class="card-badge">Manage</div>
+            </div>
+          </div>
+
+          <!-- Active Bookings Card -->
+          <div class="dashboard-card booking-card" (click)="onQuickAction('booking')">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                   alt="Booking System">
+            </div>
+            <div class="card-content">
+              <div class="card-icon">📅</div>
+              <h3 class="card-title">Active Bookings</h3>
+              <div class="card-main-value">{{ dashboardStats.activeBookings }}</div>
+              <div class="card-subtext">12 Check-ins Today</div>
+              <div class="card-badge">View All</div>
+            </div>
+          </div>
+
+          <!-- Guests Card -->
+          <div class="dashboard-card guest-card" (click)="onQuickAction('guests')">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                   alt="Happy Guests">
+            </div>
+            <div class="card-content">
+              <div class="card-icon">👥</div>
+              <h3 class="card-title">Current Guests</h3>
+              <div class="card-main-value">{{ dashboardStats.currentGuests }}</div>
+              <div class="card-subtext">45% International</div>
+              <div class="card-badge">Manage</div>
+            </div>
+          </div>
+
+          <!-- Payments Card -->
+          <div class="dashboard-card payment-card" (click)="onQuickAction('payments')">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                   alt="Payment Processing">
+            </div>
+            <div class="card-content">
+              <div class="card-icon">💳</div>
+              <h3 class="card-title">Pending Payments</h3>
+              <div class="card-main-value">{{ dashboardStats.pendingPayments }}</div>
+              <div class="card-subtext">৳85,000 Total</div>
+              <div class="card-badge">Process</div>
+            </div>
+          </div>
+
+          <!-- Revenue Card -->
+          <div class="dashboard-card revenue-card">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                   alt="Revenue Chart">
+            </div>
+            <div class="card-content">
+              <div class="card-icon">💰</div>
+              <h3 class="card-title">Monthly Revenue</h3>
+              <div class="card-main-value">{{ dashboardStats.totalRevenue }}</div>
+              <div class="card-subtext">+15% from last month</div>
+              <div class="card-badge success">Growing</div>
+            </div>
+          </div>
+
+          <!-- Admin Panel Card -->
+          <div class="dashboard-card admin-card" (click)="onQuickAction('admin')">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                   alt="Admin Panel">
+            </div>
+            <div class="card-content">
+              <div class="card-icon">⚙️</div>
+              <h3 class="card-title">Admin Panel</h3>
+              <div class="card-main-value">Full Control</div>
+              <div class="card-subtext">System Settings & Reports</div>
+              <div class="card-badge">Access</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Gallery Section -->
+    <div class="gallery-section">
+      <div class="container">
+        <h2 class="section-title">Hotel Gallery</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Luxury Room">
+          </div>
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Hotel Lobby">
+          </div>
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Swimming Pool">
+          </div>
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Restaurant">
+          </div>
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Spa Center">
+          </div>
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gym Area">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity Section -->
+    <div class="activity-section">
+      <div class="container">
+        <div class="activity-card">
+          <h2 class="section-title">Recent Activity</h2>
+          <div class="activity-list">
+            <div class="activity-item" *ngFor="let activity of recentActivities">
+              <div class="activity-icon" [class]="activity.type">
+                {{ activity.icon }}
+              </div>
+              <div class="activity-content">
+                <p>{{ activity.message }}</p>
+                <span class="activity-time">{{ activity.time }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

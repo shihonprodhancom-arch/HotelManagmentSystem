@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,25 +6,64 @@ import { Router } from '@angular/router';
   templateUrl: './nav-admin.component.html',
   styleUrls: ['./nav-admin.component.css']
 })
-export class NavAdminComponent {
+export class NavAdminComponent implements OnInit {
   constructor(private router: Router) { }
 
   currentYear: number = new Date().getFullYear();
+  
+  // Dashboard statistics
+  dashboardStats = {
+    totalRooms: 120,
+    availableRooms: 24,
+    activeBookings: 85,
+    currentGuests: 250,
+    pendingPayments: 12,
+    totalRevenue: '৳2.5M',
+    occupancyRate: 94,
+    hotelRating: 4.8
+  };
 
-  // Dashboard cards with router links
-  cards = [
-    { title: 'Total Rooms', value: 120, link: '/rooms' },
-    { title: 'Active Bookings', value: 85, link: '/booking' },
-    { title: 'Guests', value: 250, link: '/guests' },
-    { title: 'Pending Payments', value: 12, link: '/payment' },
-    { title: 'Admin Panel', value: 'Manage Settings', link: '/admin' }
+  // Recent activities
+  recentActivities = [
+    { type: 'booking', message: 'New booking from John Smith', time: '2 minutes ago', icon: '✓' },
+    { type: 'maintenance', message: 'Room 201 requires maintenance', time: '1 hour ago', icon: '⚠' },
+    { type: 'payment', message: 'Payment received for Booking #1234', time: '3 hours ago', icon: '💳' },
+    { type: 'booking', message: 'Check-out completed for Room 305', time: '5 hours ago', icon: '✓' },
+    { type: 'maintenance', message: 'Pool area cleaning scheduled', time: '6 hours ago', icon: '⚠' }
   ];
 
-  goToRooms() {
-    this.router.navigate(['/rooms']);
+  ngOnInit() {
+    // You can add initialization logic here
   }
 
-  goToBookings() {
-    this.router.navigate(['/booking']);
+  // Navigation methods
+  navigateTo(path: string) {
+    this.router.navigate([path]);
+  }
+
+  // Quick action methods
+  onQuickAction(action: string) {
+    switch(action) {
+      case 'rooms':
+        this.navigateTo('/rooms');
+        break;
+      case 'booking':
+        this.navigateTo('/booking');
+        break;
+      case 'guests':
+        this.navigateTo('/guests');
+        break;
+      case 'payments':
+        this.navigateTo('/payments');
+        break;
+      case 'admin':
+        this.navigateTo('/admin');
+        break;
+    }
+  }
+
+  // Get occupancy percentage
+  getOccupancyPercentage(): number {
+    return Math.round(((this.dashboardStats.totalRooms - this.dashboardStats.availableRooms) / this.dashboardStats.totalRooms) * 100);
   }
 }
