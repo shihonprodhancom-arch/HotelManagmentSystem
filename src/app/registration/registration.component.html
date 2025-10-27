@@ -1,17 +1,28 @@
-<div class="registration-container">
-  <h2>Register</h2>
-  <form (ngSubmit)="register()">
-    <label>Name:</label>
-    <input type="text" [(ngModel)]="formData.name" name="name" required />
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <!-- Navigation Buttons -->
+    <div class="auth-nav">
+      <button routerLink="/login" routerLinkActive="active">Login</button>
+      <button routerLink="/signup" routerLinkActive="active">Sign Up</button>
+    </div>
 
-    <label>Email:</label>
-    <input type="email" [(ngModel)]="formData.email" name="email" required />
+    <!-- Form -->
+    <div class="auth-form">
+      <h2>Sign Up</h2>
+      <form (ngSubmit)="register()">
+        <label>Name</label>
+        <input type="text" [(ngModel)]="formData.name" name="name" placeholder="Enter your name" required />
 
-    <label>Password:</label>
-    <input type="password" [(ngModel)]="formData.password" name="password" required />
+        <label>Email</label>
+        <input type="email" [(ngModel)]="formData.email" name="email" placeholder="Enter your email" required />
 
-    <button type="submit" [disabled]="loading">
-      {{ loading ? 'Registering...' : 'Register' }}
-    </button>
-  </form>
+        <label>Password</label>
+        <input type="password" [(ngModel)]="formData.password" name="password" placeholder="Enter your password" required />
+
+        <button type="submit" [disabled]="loading">
+          {{ loading ? 'Registering...' : 'Sign Up' }}
+        </button>
+      </form>
+    </div>
+  </div>
 </div>

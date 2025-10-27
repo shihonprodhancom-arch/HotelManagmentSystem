@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RoomGroup, RoomService, Room } from '../services/room.service';
+import { RoomGroup, RoomService, Room } from '../../../services/room.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-rooms',
@@ -9,18 +10,47 @@ import { RoomGroup, RoomService, Room } from '../services/room.service';
 })
 export class RoomsComponent implements OnInit {
 
+
+
+  getImageUrl(imagePath: string | undefined): string {
+    if (!imagePath) {
+      return 'assets/images/room-placeholder.jpg';
+    }
+
+    // If it's already a full URL, return as is
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+
+    // Add the base URL to relative paths
+    return `http://localhost:9092/${imagePath}`;
+  }
+
+
   selectedGroup: RoomGroup | null = null;
   roomGroups: RoomGroup[] = [];
   isLoading: boolean = true;
   error: string | null = null;
 
+  isLogin: boolean = false;
+  userRole = ''
+
   constructor(
     private router: Router,
-    private roomService: RoomService
-  ) {}
+    private roomService: RoomService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.loadRoomGroups();
+    this.getUserRole();
+  }
+
+
+  getUserRole() {
+    this.userRole = this.authService.getRoles()[0];
+    console.log('-----------------------', this.userRole);
+
   }
 
   loadRoomGroups(): void {
@@ -36,12 +66,30 @@ export class RoomsComponent implements OnInit {
         console.error('Error loading room groups:', error);
         this.error = 'Failed to load room data. Please try again later.';
         this.isLoading = false;
-        
+
         // Fallback to static data if API fails
         this.loadFallbackData();
       }
     });
   }
+
+  deleteRoom(_t39: Room) {
+
+    this.roomService.deleteRoom(_t39.id).subscribe({
+      next: () => {
+        this.loadRoomGroups();
+      },
+      error: (error) => {
+        console.error('Error Delete room groups:', error);
+        this.error = 'Failed to delete room data. Please try again later.';
+        this.isLoading = false;
+        this.loadRoomGroups();
+      }
+
+    })
+
+  }
+
 
   private loadFallbackData(): void {
     // Fallback static data in case API is not available
@@ -121,20 +169,95 @@ export class RoomsComponent implements OnInit {
   }
 
   getRoomCount(): number {
-    return this.roomGroups.reduce((total, group) => total + group.rooms.length, 0);
+    return this.roomGroups.reduce((total, group) => total + (group.rooms?.length || 0), 0);
   }
 
-  getServicesList(services: string[]): string {
-    return services.join(', ');
+  getServicesList(services?: string[]): string {
+    return services?.join(', ') || '';
   }
 
-  getStartingPrice(rooms: Room[]): number {
-  if (!rooms || rooms.length === 0) return 0;
-  return Math.min(...rooms.map(room => room.price));
-}
+  getStartingPrice(rooms?: Room[]): number {
+    if (!rooms || rooms.length === 0) return 0;
+    const prices = rooms.map(room => room.price || 0).filter(price => price > 0);
+    return prices.length > 0 ? Math.min(...prices) : 0;
+  }
 
-getMaxCapacity(rooms: Room[]): number {
-  if (!rooms || rooms.length === 0) return 0;
-  return Math.max(...rooms.map(room => room.capacity));
-}
+  getMaxCapacity(rooms?: Room[]): number {
+    if (!rooms || rooms.length === 0) return 0;
+    const capacities = rooms.map(room => room.capacity || 0).filter(capacity => capacity > 0);
+    return capacities.length > 0 ? Math.max(...capacities) : 0;
+  }
+
+  // getFirstRoomImage(rooms?: Room[]): string {
+  //   // return rooms?.[0]?.image || 'assets/img/room-placeholder.jpg';
+
+  // if (!rooms?.[0]?.image) {
+  //   return 'assets/img/room-placeholder.jpg';
+  // }
+
+  // // If it's already a full URL, return as is
+  // if (rooms?.[0]?.image.startsWith('http')) {
+  //   return rooms?.[0]?.image;
+  // }
+
+  // // Add the base URL to relative paths
+  // return `http://localhost:9092/${rooms?.[0]?.image}`;
+
+  // }
+
+  getFirstRoomImage(rooms?: Room[]): string {
+    console.log('Rooms data:', rooms); // Debug log
+
+    if (!rooms || rooms.length === 0) {
+      console.log('No rooms provided');
+      return 'assets/img/room-placeholder.jpg';
+    }
+
+    const firstRoom = rooms[0];
+    console.log('First room:', firstRoom); // Debug log
+
+    if (!firstRoom.image) {
+      console.log('No image in first room');
+      return 'assets/img/room-placeholder.jpg';
+    }
+
+    console.log('Room image value:', firstRoom.image); // Debug log
+
+    // If it's already a full URL, return as is
+    if (firstRoom.image.startsWith('http')) {
+      console.log('Returning full URL image');
+      return firstRoom.image;
+    }
+
+    // Clean the path - remove leading slashes if any
+    const cleanImagePath = firstRoom.image.replace(/^\/+/, '');
+    const fullImageUrl = `http://localhost:9092/${cleanImagePath}`;
+
+    console.log('Returning constructed URL:', fullImageUrl);
+    return fullImageUrl;
+  }
+
+  getRoomType(group: RoomGroup): string {
+    return group.type || 'Unknown Type';
+  }
+
+  getRoomNumber(room: Room): number {
+    return room.number || 0;
+  }
+
+  getRoomPrice(room: Room): number {
+    return room.price || 0;
+  }
+
+  getRoomCapacity(room: Room): number {
+    return room.capacity || 0;
+  }
+
+  getRoomServices(room: Room): string[] {
+    return room.services || [];
+  }
+
+  // getRoomImage(room: Room): string {
+  //   return room.image || 'assets/img/room-placeholder.jpg';
+  // }
 }

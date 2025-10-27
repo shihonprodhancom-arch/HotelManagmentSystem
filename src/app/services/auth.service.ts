@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+
+export interface LoginResponse {
+  token: string;
+  roles: string[];
+  message: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -11,16 +17,33 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  // Registration
   register(user: { name: string; email: string; password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`, user);
   }
 
-  login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login`, credentials);
+  // Login
+  login(credentials: { email: string; password: string }): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.baseUrl}/login`, credentials)
+      .pipe(
+        tap(res => {
+          this.saveToken(res.token);
+          this.saveRoles(res.roles);
+        })
+      );
   }
 
-  saveToken(token: string) {
+  private saveToken(token: string) {
     localStorage.setItem('authToken', token);
+  }
+
+  private saveRoles(roles: string[]) {
+    localStorage.setItem('userRoles', JSON.stringify(roles));
+  }
+
+  getRoles(): string[] {
+    const roles = localStorage.getItem('userRoles');
+    return roles ? JSON.parse(roles) : [];
   }
 
   getToken(): string | null {
@@ -28,10 +51,11 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('authToken');
+    return !!this.getToken();
   }
 
   logout() {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('userRoles');
   }
 }

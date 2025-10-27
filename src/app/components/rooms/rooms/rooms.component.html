@@ -1,0 +1,89 @@
+<div class="rooms-container">
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading room data...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="error-container">
+    <div class="alert alert-warning">
+      <p>{{ error }}</p>
+      <button class="btn btn-primary" (click)="refreshData()">Retry</button>
+    </div>
+  </div>
+
+  <!-- Room Groups Grid -->
+  <div *ngIf="!isLoading && !error" class="room-groups-grid">
+    <div *ngFor="let group of roomGroups" class="room-group-card" (click)="viewGroupDetails(group)">
+      <div class="group-header">
+        <h3>{{ getRoomType(group) }} Rooms</h3>
+        <span class="room-count">{{ group.rooms?.length || 0 }} rooms</span>
+      </div>
+
+      <div class="group-preview">
+        <img [src]="getFirstRoomImage(group.rooms)" [alt]="getRoomType(group) + ' Room'" class="preview-image"
+          onerror="this.src='assets/img/room-placeholder.jpg'">
+        <div class="preview-info">
+          <p class="price">From BDT {{ getStartingPrice(group.rooms) }}/night</p>
+          <p class="capacity">Up to {{ getMaxCapacity(group.rooms) }} guests</p>
+        </div>
+      </div>
+
+      <button class="btn-view-details">View Details</button>
+    </div>
+  </div>
+
+  <!-- Room Group Details Modal -->
+  <div *ngIf="selectedGroup" class="modal-overlay" (click)="closeDetails()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ getRoomType(selectedGroup) }} Rooms</h2>
+        <button class="close-btn" (click)="closeDetails()">&times;</button>
+      </div>
+
+      <div class="rooms-list">
+        <div *ngFor="let room of selectedGroup.rooms || []" class="room-card">
+          <div class="room-image">
+            <img [src]="getImageUrl(room.image)" [alt]="'Room ' + getRoomNumber(room)"
+              onerror="this.src='assets/img/room-placeholder.jpg'">
+          </div>
+
+          <div class="room-details">
+            <h4>Room {{ getRoomNumber(room) }}</h4>
+            <p class="price">BDT {{ getRoomPrice(room) }}/night</p>
+            <p class="capacity">Capacity: {{ getRoomCapacity(room) }} person{{ getRoomCapacity(room) > 1 ? 's' : '' }}
+            </p>
+            <div class="services">
+              <span class="service-tag" *ngFor="let service of getRoomServices(room)">
+                {{ service }}
+              </span>
+            </div>
+          </div>
+
+          <div class="room-actions">
+            <button class="btn-book" (click)="bookRoom(room)">
+              Book Now
+            </button>
+            &nbsp;
+
+            <button *ngIf="userRole === 'ADMIN'" class="btn-book" [routerLink]="['/sidebar/rooms/add', room.id]">
+              Edit
+            </button>
+
+            &nbsp;
+            <button *ngIf="userRole==='ADMIN'" class="btn-book" (click)="deleteRoom(room)">
+              Delete
+            </button>
+          </div>
+        </div>
+
+        <!-- No rooms message -->
+        <div *ngIf="(selectedGroup.rooms || []).length === 0" class="no-rooms-message">
+          <p>No rooms available in this category.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

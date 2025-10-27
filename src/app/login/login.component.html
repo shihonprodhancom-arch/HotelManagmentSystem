@@ -1,14 +1,25 @@
-<div class="login-container">
-  <h2>Login</h2>
-  <form (ngSubmit)="login()">
-    <label>Email:</label>
-    <input type="email" [(ngModel)]="formData.email" name="email" required />
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <!-- Navigation Buttons -->
+    <div class="auth-nav">
+      <button routerLink="/login" routerLinkActive="active">Login</button>
+      <button routerLink="/signup" routerLinkActive="active">Sign Up</button>
+    </div>
 
-    <label>Password:</label>
-    <input type="password" [(ngModel)]="formData.password" name="password" required />
+    <!-- Form -->
+    <div class="auth-form">
+      <h2>Login</h2>
+      <form (ngSubmit)="login()">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="formData.email" name="email" placeholder="Enter your email" required />
 
-    <button type="submit" [disabled]="loading">
-      {{ loading ? 'Logging in...' : 'Login' }}
-    </button>
-  </form>
+        <label>Password</label>
+        <input type="password" [(ngModel)]="formData.password" name="password" placeholder="Enter your password" required />
+
+        <button type="submit" [disabled]="loading">
+          {{ loading ? 'Logging in...' : 'Login' }}
+        </button>
+      </form>
+    </div>
+  </div>
 </div>

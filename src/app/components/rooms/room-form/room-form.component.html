@@ -1,0 +1,308 @@
+<div class="container-fluid">
+  <div class="row min-vh-100 bg-light">    
+
+    <!-- Main Content -->
+    <div class="col-lg-10 col-md-9 main-content">
+      <div class="container-fluid py-4">
+        <!-- Header -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h2 class="page-title">
+                  <i class="fas fa-bed text-primary me-3"></i>
+                  {{ isEditMode ? 'Edit Room' : 'Add New Room' }}
+                </h2>
+                <p class="text-muted mb-0">
+                  {{ isEditMode ? 'Update room details and amenities' : 'Create a new room with all necessary details' }}
+                </p>
+              </div>
+              <button class="btn btn-outline-secondary" routerLink="/rooms">
+                <i class="fas fa-arrow-left me-2"></i>
+                Back to Rooms
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Form Card -->
+        <div class="row justify-content-center">
+          <div class="col-xl-10">
+            <div class="card modern-card shadow-sm border-0">
+              <div class="card-body p-0">
+                <form [formGroup]="roomForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+                  
+                  <!-- Progress Steps -->
+                  <div class="form-progress">
+                    <div class="progress-steps">
+                      <div class="step active" [class.completed]="currentStep > 1">
+                        <div class="step-number">1</div>
+                        <span class="step-label">Basic Info</span>
+                      </div>
+                      <div class="step" [class.active]="currentStep === 2" [class.completed]="currentStep > 2">
+                        <div class="step-number">2</div>
+                        <span class="step-label">Image</span>
+                      </div>
+                      <div class="step" [class.active]="currentStep === 3" [class.completed]="currentStep > 3">
+                        <div class="step-number">3</div>
+                        <span class="step-label">Services</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Step 1: Basic Information -->
+                  <div class="form-step" *ngIf="currentStep === 1">
+                    <div class="step-header">
+                      <h5>
+                        <i class="fas fa-info-circle text-primary me-2"></i>
+                        Basic Information
+                      </h5>
+                      <p class="text-muted">Provide the essential details about the room</p>
+                    </div>
+
+                    <div class="row g-4">
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          <input type="number" class="form-control modern-input" id="number" 
+                                 formControlName="number" placeholder="Room Number">
+                          <label for="number" class="modern-label">
+                            <i class="fas fa-hashtag me-2"></i>
+                            Room Number *
+                          </label>
+                          <div class="invalid-feedback" *ngIf="roomForm.get('number')?.invalid && roomForm.get('number')?.touched">
+                            Please enter a valid room number
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          <select class="form-select modern-input" id="roomGroupId" formControlName="roomGroupId">
+                            <option value="">Select Room Type</option>
+                            <option *ngFor="let group of roomGroups" [value]="group.id">
+                              {{ group.type }}
+                            </option>
+                          </select>
+                          <label for="roomGroupId" class="modern-label">
+                            <i class="fas fa-tags me-2"></i>
+                            Room Type *
+                          </label>
+                          <div class="invalid-feedback" *ngIf="roomForm.get('roomGroupId')?.invalid && roomForm.get('roomGroupId')?.touched">
+                            Please select a room type
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          <input type="number" class="form-control modern-input" id="price" 
+                                 formControlName="price" step="0.01" placeholder="Price">
+                          <label for="price" class="modern-label">
+                            <i class="fas fa-tag me-2"></i>
+                            Price per Night (₹) *
+                          </label>
+                          <div class="invalid-feedback" *ngIf="roomForm.get('price')?.invalid && roomForm.get('price')?.touched">
+                            Please enter a valid price
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          <input type="number" class="form-control modern-input" id="capacity" 
+                                 formControlName="capacity" placeholder="Capacity">
+                          <label for="capacity" class="modern-label">
+                            <i class="fas fa-users me-2"></i>
+                            Capacity *
+                          </label>
+                          <div class="invalid-feedback" *ngIf="roomForm.get('capacity')?.invalid && roomForm.get('capacity')?.touched">
+                            Please enter room capacity
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Step 2: Image Upload -->
+                  <div class="form-step" *ngIf="currentStep === 2">
+                    <div class="step-header">
+                      <h5>
+                        <i class="fas fa-image text-primary me-2"></i>
+                        Room Image
+                      </h5>
+                      <p class="text-muted">Upload a high-quality image of the room</p>
+                    </div>
+
+                    <div class="upload-section">
+                      <div class="upload-card" 
+                           [class.drag-over]="isDragOver"
+                           [class.has-file]="isFileSelected"
+                           (dragover)="onDragOver($event)"
+                           (dragleave)="onDragLeave($event)"
+                           (drop)="onDrop($event)">
+                        
+                        <div class="upload-content text-center" *ngIf="!isFileSelected">
+                          <div class="upload-icon mb-3">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                          </div>
+                          <h6 class="mb-2">Drag & Drop your image here</h6>
+                          <p class="text-muted mb-3">or</p>
+                          <label class="btn btn-primary btn-lg">
+                            <input type="file" class="file-input" 
+                                   accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+                                   (change)="onFileSelected($event)">
+                            <i class="fas fa-folder-open me-2"></i>
+                            Browse Files
+                          </label>
+                          <p class="upload-hint mt-3">
+                            <small class="text-muted">
+                              Supports: JPG, PNG, GIF, WebP • Max 5MB
+                            </small>
+                          </p>
+                        </div>
+
+                        <div class="file-preview" *ngIf="isFileSelected">
+                          <div class="preview-container">
+                            <div class="preview-image">
+                              <img [src]="imagePreview" alt="Preview">
+                              <div class="preview-actions">
+                                <button type="button" class="btn btn-danger btn-sm" (click)="removeSelectedFile()">
+                                  <i class="fas fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="file-details">
+                              <h6 class="file-name">{{ selectedFile?.name }}</h6>
+                              <div class="file-meta">
+                                <span class="file-type badge bg-secondary">
+                                  {{ getFileExtension(selectedFile?.name || '') }}
+                                </span>
+                                <span class="file-size text-muted">
+                                  {{ selectedFile ? formatFileSize(selectedFile.size) : '' }}
+                                </span>
+                              </div>
+                              
+                              <div class="upload-progress mt-3" *ngIf="isUploading">
+                                <div class="progress">
+                                  <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                       [style.width.%]="uploadProgress"></div>
+                                </div>
+                                <small class="text-muted">{{ uploadProgress }}% uploaded</small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="isEditMode && !isFileSelected && imagePreview" class="current-image-alert mt-3">
+                        <div class="alert alert-info d-flex align-items-center">
+                          <i class="fas fa-info-circle me-2"></i>
+                          <span>Current image is being used. Select a new image to replace it.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Step 3: Services -->
+                  <div class="form-step" *ngIf="currentStep === 3">
+                    <div class="step-header">
+                      <h5>
+                        <i class="fas fa-concierge-bell text-primary me-2"></i>
+                        Room Services & Amenities
+                      </h5>
+                      <p class="text-muted">Select the services available in this room</p>
+                    </div>
+
+                    <div class="services-section">
+                      <div class="services-grid">
+                        <div *ngFor="let service of availableServices" 
+                             class="service-card" 
+                             [class.selected]="isServiceSelected(service)"
+                             (click)="toggleService(service)">
+                          <div class="service-icon">
+                            <i [class]="getServiceIcon(service)"></i>
+                          </div>
+                          <div class="service-info">
+                            <h6 class="service-name">{{ service }}</h6>
+                            <p class="service-description text-muted">
+                              {{ getServiceDescription(service) }}
+                            </p>
+                          </div>
+                          <div class="service-check">
+                            <i class="fas fa-check" *ngIf="isServiceSelected(service)"></i>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Selected Services Summary -->
+                      <div *ngIf="servicesArray.length > 0" class="selected-services-summary mt-4">
+                        <h6 class="mb-3">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          Selected Services ({{ servicesArray.length }})
+                        </h6>
+                        <div class="selected-tags">
+                          <span *ngFor="let service of servicesArray.controls" 
+                                class="selected-tag">
+                            <i [class]="getServiceIcon(service.value)" class="me-2"></i>
+                            {{ service.value }}
+                            <button type="button" class="tag-remove" 
+                                    (click)="toggleService(service.value)">
+                              <i class="fas fa-times"></i>
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Navigation Buttons -->
+                  <div class="form-navigation">
+                    <div class="d-flex justify-content-between">
+                      <button type="button" class="btn btn-outline-secondary" 
+                              *ngIf="currentStep > 1"
+                              (click)="previousStep()">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Previous
+                      </button>
+                      <button type="button" class="btn btn-primary ms-auto" 
+                              *ngIf="currentStep < 3"
+                              (click)="nextStep()"
+                              [disabled]="!isStepValid(currentStep)">
+                        Next
+                        <i class="fas fa-arrow-right ms-2"></i>
+                      </button>
+                      <button type="submit" class="btn btn-success" 
+                              *ngIf="currentStep === 3"
+                              [disabled]="isLoading || (!isFileSelected && !isEditMode)">
+                        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                        <i class="fas fa-save me-2" *ngIf="!isLoading"></i>
+                        {{ isEditMode ? 'Update Room' : 'Create Room' }}
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div *ngFor="let toast of toasts" 
+       class="toast show" 
+       [class]="'toast-' + toast.type"
+       role="alert">
+    <div class="toast-header">
+      <i [class]="getToastIcon(toast.type)" class="me-2"></i>
+      <strong class="me-auto">{{ toast.title }}</strong>
+      <button type="button" class="btn-close" (click)="removeToast(toast.id)"></button>
+    </div>
+    <div class="toast-body">
+      {{ toast.message }}
+    </div>
+  </div>
+</div>

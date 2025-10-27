@@ -6,8 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Components
 import { AppComponent } from './app.component';
-import { RoomsComponent } from './rooms/rooms.component';
-import { RoomFormComponent } from './rooms/room-form/room-form.component';
+import { RoomsComponent } from './components/rooms/rooms/rooms.component';
+import { RoomFormComponent } from './components/rooms/room-form/room-form.component';
 import { BookingComponent } from './booking/booking.component';
 import { GuestsComponent } from './guests/guests.component';
 import { PaymentsComponent } from './payments/payments.component';
@@ -22,6 +22,7 @@ import { NavAdminComponent } from './components/nav-admin/nav-admin.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LogoutComponent } from './logout/logout.component';
+import { RoomGroupListComponent } from './components/rooms/room-group-list/room-group-list.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LogoutComponent } from './logout/logout.component';
     NavAdminComponent,
     SidebarComponent,
     BookingComponent,
-    LogoutComponent
+    LogoutComponent,
+    RoomGroupListComponent
   ],
   imports: [
     BrowserModule,

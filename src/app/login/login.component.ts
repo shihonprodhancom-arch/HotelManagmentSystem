@@ -19,9 +19,8 @@ export class LoginComponent {
 
     this.authService.login(this.formData).subscribe({
       next: (res) => {
-        this.authService.saveToken(res.token);
         alert('✅ Login successful!');
-        this.router.navigate(['/sidebar']); // sidebar বা dashboard route
+        this.router.navigate(['/sidebar']); // redirect to dashboard/sidebar
         this.loading = false;
       },
       error: () => {
