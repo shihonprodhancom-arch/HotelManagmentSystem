@@ -1,0 +1,28 @@
+<div class="container">
+  <h2>Staff Management</h2>
+  <button routerLink="/sidebar/staff/add" class="btn btn-primary">Add New Staff</button>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Salary</th>
+        <th>Shift</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of staffList">
+        
+        <td>{{ s.name }}</td>
+        <td>{{ s.role }}</td>
+        <td>{{ s.salary }}</td>
+        <td>{{ s.shift }}</td>
+        <td>
+          <button (click)="deleteStaff(s.id)" class="btn btn-danger btn-sm">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

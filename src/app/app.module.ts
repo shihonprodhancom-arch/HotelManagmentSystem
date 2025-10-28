@@ -23,6 +23,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LogoutComponent } from './logout/logout.component';
 import { RoomGroupListComponent } from './components/rooms/room-group-list/room-group-list.component';
+import { StaffFormComponent } from './staff-form/staff-form.component';
+import { StaffListComponent } from './staff-list/staff-list.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { RoomGroupListComponent } from './components/rooms/room-group-list/room-
     SidebarComponent,
     BookingComponent,
     LogoutComponent,
-    RoomGroupListComponent
+    RoomGroupListComponent,
+    StaffFormComponent,
+    StaffListComponent
   ],
   imports: [
     BrowserModule,

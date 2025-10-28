@@ -1,0 +1,15 @@
+<div class="form-container">
+  <h2>Add Staff</h2>
+  <form (ngSubmit)="saveStaff()">
+    <input [(ngModel)]="staff.name" name="name" placeholder="Name" required />
+    <input [(ngModel)]="staff.role" name="role" placeholder="Role" required />
+    <input [(ngModel)]="staff.salary" name="salary" placeholder="Salary" type="number" required />
+    <select [(ngModel)]="staff.shift" name="shift" required>
+      <option value="">Select Shift</option>
+      <option>Morning</option>
+      <option>Night</option>
+    </select>
+
+    <button type="submit">Save</button>
+  </form>
+</div>
