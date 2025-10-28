@@ -19,6 +19,9 @@ import { PaymentsComponent } from './payments/payments.component';
 import { AdminComponent } from './admin/admin.component';
 import { StaffListComponent } from './staff-list/staff-list.component';
 import { StaffFormComponent } from './staff-form/staff-form.component';
+import { AttendanceComponent } from './attendance/attendance.component';
+import { ServiceFormComponent } from './services/service-form/service-form.component';
+import { ServiceListComponent } from './services/service-list/service-list.component';
 
 
 const routes: Routes = [
@@ -39,6 +42,9 @@ const routes: Routes = [
       { path: 'guests', component: GuestsComponent },
       { path: 'staff-management', component: StaffListComponent },
       { path: 'staff/add', component: StaffFormComponent },
+      { path: 'attendance', component: AttendanceComponent },
+      { path: 'sidebar/services', component: ServiceListComponent },
+      { path: 'services', component: ServiceFormComponent },
       { path: 'payments', component: PaymentsComponent },
       { path: 'admin', component: AdminComponent },
 
@@ -48,8 +54,8 @@ const routes: Routes = [
   },
 
   // 🔹 Root & Wildcard
-  // { path: '', redirectTo: '/login', pathMatch: 'full' },
-  // { path: '**', redirectTo: '/login' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({

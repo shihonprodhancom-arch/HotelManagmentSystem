@@ -1,0 +1,19 @@
+<div class="container mt-4">
+  <h2>All Services</h2>
+  <table class="table mt-2">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of services">
+        <td>{{ s.name }}</td>
+        <td>{{ s.description }}</td>
+        <td>{{ s.price }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

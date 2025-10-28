@@ -25,6 +25,9 @@ import { LogoutComponent } from './logout/logout.component';
 import { RoomGroupListComponent } from './components/rooms/room-group-list/room-group-list.component';
 import { StaffFormComponent } from './staff-form/staff-form.component';
 import { StaffListComponent } from './staff-list/staff-list.component';
+import { AttendanceComponent } from './attendance/attendance.component';
+import { ServiceFormComponent } from './services/service-form/service-form.component';
+import { ServiceListComponent } from './services/service-list/service-list.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import { StaffListComponent } from './staff-list/staff-list.component';
     LogoutComponent,
     RoomGroupListComponent,
     StaffFormComponent,
-    StaffListComponent
+    StaffListComponent,
+    AttendanceComponent,
+    ServiceFormComponent,
+    ServiceListComponent
   ],
   imports: [
     BrowserModule,

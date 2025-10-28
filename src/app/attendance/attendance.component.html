@@ -1,0 +1,57 @@
+<div class="container mt-4 attendance-container">
+  <h2 class="text-center mb-4">Attendance</h2>
+
+  <!-- Filter -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="text-primary">Attendance List</h5>
+    <select #staffSelect class="form-select w-auto" (change)="viewByStaff(staffSelect.value)">
+      <option value="0">All Staff</option>
+      <option *ngFor="let staff of staffList" [value]="staff.id">{{ staff.name }}</option>
+    </select>
+  </div>
+
+  <!-- Attendance Table -->
+  <table class="table table-striped table-hover shadow-sm rounded">
+    <thead class="table-dark">
+      <tr>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Staff</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of attendanceList">
+        <td>{{ a.date }}</td>
+        <td>
+          <span [ngClass]="{'text-success': a.status === 'Present', 'text-danger': a.status === 'Absent'}">
+            {{ a.status }}
+          </span>
+        </td>
+        <td>{{ a.staffName || a.staffId }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Add Attendance Form -->
+  <div class="mt-4 card p-4 shadow-sm rounded bg-light">
+    <h5 class="text-secondary mb-3">Add Attendance</h5>
+    <form (ngSubmit)="saveAttendance()">
+      <div class="mb-2">
+        <input type="date" [(ngModel)]="form.date" name="date" required class="form-control">
+      </div>
+      <div class="mb-2">
+        <select [(ngModel)]="form.staffId" name="staffId" required class="form-select">
+          <option value="0">Select Staff</option>
+          <option *ngFor="let staff of staffList" [value]="staff.id">{{ staff.name }}</option>
+        </select>
+      </div>
+      <div class="mb-2">
+        <select [(ngModel)]="form.status" name="status" required class="form-select">
+          <option>Present</option>
+          <option>Absent</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Save Attendance</button>
+    </form>
+  </div>
+</div>

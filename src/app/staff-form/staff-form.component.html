@@ -1,15 +1,74 @@
-<div class="form-container">
-  <h2>Add Staff</h2>
-  <form (ngSubmit)="saveStaff()">
-    <input [(ngModel)]="staff.name" name="name" placeholder="Name" required />
-    <input [(ngModel)]="staff.role" name="role" placeholder="Role" required />
-    <input [(ngModel)]="staff.salary" name="salary" placeholder="Salary" type="number" required />
-    <select [(ngModel)]="staff.shift" name="shift" required>
-      <option value="">Select Shift</option>
-      <option>Morning</option>
-      <option>Night</option>
-    </select>
+<div class="container mt-5">
+  <div class="card shadow-lg p-4 border-0 rounded-4 mx-auto" style="max-width: 500px;">
+    <h3 class="text-center mb-4 fw-bold text-primary">👨‍💼 Add New Staff</h3>
 
-    <button type="submit">Save</button>
-  </form>
+    <form (ngSubmit)="saveStaff()" #staffForm="ngForm">
+      <!-- Name -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Full Name</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="staff.name"
+          name="name"
+          placeholder="Enter staff name"
+          required
+        />
+      </div>
+
+      <!-- Role -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Role / Position</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="staff.role"
+          name="role"
+          placeholder="e.g. Receptionist, Cleaner, Manager"
+          required
+        />
+      </div>
+
+      <!-- Salary -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Salary (৳)</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="staff.salary"
+          name="salary"
+          placeholder="Enter salary amount"
+          required
+          min="0"
+        />
+      </div>
+
+      <!-- Shift -->
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Shift</label>
+        <select
+          class="form-select"
+          [(ngModel)]="staff.shift"
+          name="shift"
+          required
+        >
+          <option value="">Select Shift</option>
+          <option>Morning</option>
+          <option>Evening</option>
+          <option>Night</option>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="d-grid">
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg rounded-3"
+          [disabled]="staffForm.invalid"
+        >
+          💾 Save Staff
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

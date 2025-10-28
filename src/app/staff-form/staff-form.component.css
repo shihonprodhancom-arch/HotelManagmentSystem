@@ -1,0 +1,16 @@
+.card {
+  background-color: #f8f9fa;
+}
+
+.form-label {
+  color: #495057;
+}
+
+input:focus, select:focus {
+  box-shadow: 0 0 8px rgba(13, 110, 253, 0.25);
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
