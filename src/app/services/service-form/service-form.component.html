@@ -1,9 +1,21 @@
 <div class="container mt-4">
-  <h2>Add Service</h2>
-  <form (ngSubmit)="saveService()">
-    <input [(ngModel)]="service.name" name="name" placeholder="Service Name" class="form-control mb-2" required />
-    <input [(ngModel)]="service.description" name="description" placeholder="Description" class="form-control mb-2" required />
-    <input [(ngModel)]="service.price" name="price" placeholder="Price" type="number" class="form-control mb-2" required />
-    <button type="submit" class="btn btn-primary">Save</button>
+  <h2 class="text-center mb-3">Add Extra Service</h2>
+  <form (ngSubmit)="saveService()" #serviceForm="ngForm">
+    <div class="form-group mb-3">
+      <label>Name</label>
+      <input type="text" class="form-control" [(ngModel)]="service.name" name="name" required>
+    </div>
+
+    <div class="form-group mb-3">
+      <label>Description</label>
+      <textarea class="form-control" [(ngModel)]="service.description" name="description" required></textarea>
+    </div>
+
+    <div class="form-group mb-3">
+      <label>Price</label>
+      <input type="number" class="form-control" [(ngModel)]="service.price" name="price" required>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Save Service</button>
   </form>
 </div>

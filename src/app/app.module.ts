@@ -28,6 +28,7 @@ import { StaffListComponent } from './staff-list/staff-list.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { ServiceFormComponent } from './services/service-form/service-form.component';
 import { ServiceListComponent } from './services/service-list/service-list.component';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ServiceListComponent } from './services/service-list/service-list.compo
     StaffListComponent,
     AttendanceComponent,
     ServiceFormComponent,
-    ServiceListComponent
+    ServiceListComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,

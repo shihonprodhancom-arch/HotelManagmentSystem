@@ -7,8 +7,8 @@ import { ExtraService } from '../service.model';
 @Injectable({
   providedIn: 'root'
 })
-export class ServiceService {
-  private baseUrl = 'http://localhost:9092/api/services'; // Spring Boot
+export class ExtraServiceService {
+  private baseUrl = 'http://localhost:9092/api/services';
 
   constructor(private http: HttpClient) {}
 
@@ -19,4 +19,9 @@ export class ServiceService {
   add(service: ExtraService): Observable<ExtraService> {
     return this.http.post<ExtraService>(this.baseUrl, service);
   }
+
+  delete(id: number | undefined): Observable<any> {
+  return this.http.delete(`${this.baseUrl}/${id}`);
+}
+
 }

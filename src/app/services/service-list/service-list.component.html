@@ -1,19 +1,42 @@
 <div class="container mt-4">
-  <h2>All Services</h2>
-  <table class="table mt-2">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let s of services">
-        <td>{{ s.name }}</td>
-        <td>{{ s.description }}</td>
-        <td>{{ s.price }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="fw-bold">🛎️ Extra Services</h2>
+    <a routerLink="/sidebar/services/add" class="btn btn-primary">
+      ➕ Add Service
+    </a>
+  </div>
+
+  <!-- Services Table -->
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <table class="table table-striped mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Service Name</th>
+            <th>Description</th>
+            <th>Price (৳)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of serviceList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ s.name }}</td>
+            <td>{{ s.description }}</td>
+            <td>{{ s.price | currency:'BDT':'symbol':'1.0-0' }}</td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2" (click)="editService(s.id)">✏️ Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteService(s.id)">🗑️ Delete</button>
+            </td>
+          </tr>
+          <tr *ngIf="serviceList.length === 0">
+            <td colspan="5" class="text-center text-muted py-3">
+              No services found.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// 🔹 Auth Components
+// Auth
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 
-// 🔹 Sidebar & Dashboard
+// Sidebar + Dashboard
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NavAdminComponent } from './components/nav-admin/nav-admin.component';
 
-// 🔹 Features / Pages
+// Main Features
 import { RoomsComponent } from './components/rooms/rooms/rooms.component';
 import { RoomFormComponent } from './components/rooms/room-form/room-form.component';
 import { RoomGroupListComponent } from './components/rooms/room-group-list/room-group-list.component';
@@ -20,16 +20,18 @@ import { AdminComponent } from './admin/admin.component';
 import { StaffListComponent } from './staff-list/staff-list.component';
 import { StaffFormComponent } from './staff-form/staff-form.component';
 import { AttendanceComponent } from './attendance/attendance.component';
-import { ServiceFormComponent } from './services/service-form/service-form.component';
-import { ServiceListComponent } from './services/service-list/service-list.component';
 
+// ✅ Services
+import { ServiceListComponent } from './services/service-list/service-list.component';
+import { ServiceFormComponent } from './services/service-form/service-form.component';
+import { ReportComponent } from './report/report.component';
 
 const routes: Routes = [
-  // 🔹 Auth Routes
+  // Auth routes
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: RegistrationComponent },
 
-  // 🔹 Sidebar Parent
+  // Sidebar routes
   {
     path: 'sidebar', component: SidebarComponent,
     children: [
@@ -43,17 +45,20 @@ const routes: Routes = [
       { path: 'staff-management', component: StaffListComponent },
       { path: 'staff/add', component: StaffFormComponent },
       { path: 'attendance', component: AttendanceComponent },
-      { path: 'sidebar/services', component: ServiceListComponent },
-      { path: 'services', component: ServiceFormComponent },
+  { path: 'reports', component: ReportComponent },
+      // ✅ Extra Services
+      { path: 'services', component: ServiceListComponent },
+      { path: 'services/add', component: ServiceFormComponent },
+
       { path: 'payments', component: PaymentsComponent },
       { path: 'admin', component: AdminComponent },
 
-      // fallback for unknown child paths
-      { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
+      // Default child redirect
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
 
-  // 🔹 Root & Wildcard
+  // Root redirect
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }
 ];

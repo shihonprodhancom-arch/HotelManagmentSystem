@@ -338,7 +338,7 @@ export class RoomFormComponent implements OnInit {
             'success'
           );
           setTimeout(() => {
-            this.router.navigate(['/rooms']);
+            this.router.navigate(['sidebar/rooms']);
           }, 2000);
         },
         error: (error) => {
