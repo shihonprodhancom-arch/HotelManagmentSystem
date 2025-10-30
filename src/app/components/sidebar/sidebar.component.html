@@ -1,59 +1,27 @@
-<div class="d-flex">
-
+<div class="dashboard-wrapper">
   <!-- Sidebar -->
-  <nav class="sidebar bg-dark text-white d-flex flex-column p-3">
-    <h4 class="mb-4 text-center">🏨 Hotel</h4>
-
-    <ul class="nav flex-column flex-grow-1">
-      <li class="nav-item mb-2">
-        <a class="nav-btn" routerLink="/sidebar/dashboard" routerLinkActive="active">📊 Dashboard</a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-btn" routerLink="/sidebar/rooms" routerLinkActive="active">🛏️ Rooms</a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-btn" routerLink="/sidebar/rooms/add" routerLinkActive="active">➕ Add Room</a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-btn" routerLink="/sidebar/room-groups" routerLinkActive="active">🛏️ Room Group</a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-btn" routerLink="/sidebar/booking" routerLinkActive="active">📅 Booking</a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-btn" routerLink="/sidebar/guests" routerLinkActive="active">👥 Guests</a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-btn" routerLink="/sidebar/staff-management" routerLinkActive="active">🧑‍💼 Staff Management</a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-btn" routerLink="/sidebar/attendance" routerLinkActive="active">📋 Attendance</a>
-      </li>
-
-      <!-- ✅ Services Section -->
-      <li class="nav-item mb-2">
-        <a class="nav-btn" routerLink="/sidebar/services" routerLinkActive="active">🛎️ Services</a>
-      </li>
-      <li class="nav-item mb-2 ps-3">
-        <a class="nav-btn small" routerLink="/sidebar/services/add" routerLinkActive="active">➕ Add Service</a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-btn" routerLink="/sidebar/payments" routerLinkActive="active">💳 Payments</a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-btn" routerLink="/sidebar/reports" routerLinkActive="active">📈 Reports & Analytics</a>
-      </li>
-      <li class="nav-item mb-2">
-        <a class="nav-btn" routerLink="/sidebar/admin" routerLinkActive="active">⚙️ Admin</a>
-      </li>
+  <nav class="sidebar">
+    <h4 class="sidebar-title">🏨 Hotel</h4>
+    <ul class="sidebar-nav">
+      <li><a routerLink="/sidebar/dashboard" routerLinkActive="active">📊 Dashboard</a></li>
+      <li><a routerLink="/sidebar/rooms" routerLinkActive="active">🛏️ Rooms</a></li>
+      <li><a routerLink="/sidebar/rooms/add" routerLinkActive="active">➕ Add Room</a></li>
+      <li><a routerLink="/sidebar/room-groups" routerLinkActive="active">🛏️ Room Group</a></li>
+      <li><a routerLink="/sidebar/booking" routerLinkActive="active">📅 Booking</a></li>
+      <li><a routerLink="/sidebar/guests" routerLinkActive="active">👥 Guests</a></li>
+      <li><a routerLink="/sidebar/staff-management" routerLinkActive="active">🧑‍💼 Staff Management</a></li>
+      <li><a routerLink="/sidebar/attendance" routerLinkActive="active">📋 Attendance</a></li>
+      <li><a routerLink="/sidebar/services" routerLinkActive="active">🛎️ Services</a></li>
+      <li><a routerLink="/sidebar/services/add" routerLinkActive="active">➕ Add Service</a></li>
+      <li><a routerLink="/sidebar/payments" routerLinkActive="active">💳 Payments</a></li>
+      <li><a routerLink="/sidebar/reports" routerLinkActive="active">📈 Reports & Analytics</a></li>
+      <li><a routerLink="/sidebar/admin" routerLinkActive="active">⚙️ Admin</a></li>
     </ul>
-
-    <!-- Logout button fixed bottom -->
-    <button class="btn btn-outline-light mt-auto w-100" (click)="logout()">Logout</button>
+    <button class="logout-btn" (click)="logout()">Logout</button>
   </nav>
 
-  <!-- Main Content -->
-  <div class="content flex-grow-1 p-4">
+  <!-- Main Dashboard Content -->
+  <div class="dashboard-content">
     <router-outlet></router-outlet>
   </div>
 </div>
