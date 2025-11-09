@@ -59,10 +59,17 @@
               <span class="service-tag" *ngFor="let service of getRoomServices(room)">
                 {{ service }}
               </span>
+               <span *ngIf="room.available" class="av-tag" >
+                Available
+              </span>
+              <span *ngIf="!room.available" class="bo-tag" >
+                Booked
+              </span>
             </div>
+           
           </div>
 
-          <div class="room-actions">
+          <div class="room-actions" *ngIf="room.available">
             <button class="btn-book" (click)="bookRoom(room)">
               Book Now
             </button>

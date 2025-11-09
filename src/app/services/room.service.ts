@@ -24,8 +24,14 @@ export interface Room {
   services: string[];
   image: string;
   roomGroup?: RoomGroup;
-
+  type?: string;
+  status?: string;
+  available?: boolean;
+  valid?: boolean;
+  booked?: boolean;
+  underMaintenance?: boolean;
 }
+
 
 export interface RoomGroup {
   id?: number;

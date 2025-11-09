@@ -1,21 +1,4 @@
-<div class="container mt-5">
-  <h2 class="text-center mb-4 fw-bold">🏨 Hotel Admin Reports</h2>
-  
-  <div class="d-flex flex-column align-items-center gap-4 mt-4">
-    <button class="btn btn-primary btn-lg w-50 shadow" (click)="openMonthlyRevenue()">
-      💰 Monthly Revenue Report
-    </button>
-    
-    <button class="btn btn-success btn-lg w-50 shadow" (click)="openOccupancyRate()">
-      🏠 Occupancy Rate
-    </button>
-    
-    <button class="btn btn-warning btn-lg w-50 shadow" (click)="openTopBookedRooms()">
-      🛏️ Top Booked Room Types
-    </button>
-    
-    <button class="btn btn-info btn-lg w-50 shadow" (click)="openGuestFrequency()">
-      👥 Guest Frequency Report
-    </button>
-  </div>
-</div>
+<h2>Reports</h2>
+<button (click)="download('rooms')">Room Report</button>
+<button (click)="download('bookings')">Booking Report</button>
+<button (click)="download('payments')">Payment Report</button>

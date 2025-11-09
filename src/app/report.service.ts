@@ -6,15 +6,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ReportService {
 
-  private baseUrl = 'http://localhost:9092/api/reports';
+  private baseUrl = 'http://localhost:9092/report';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getMonthlyRevenue() {
-    return this.http.get(`${this.baseUrl}/monthly-revenue`, { responseType: 'blob' });
-  }
-
-  getOccupancyRate() {
-    return this.http.get(`${this.baseUrl}/occupancy-rate`, { responseType: 'blob' });
+  downloadReport(type: string) {
+    return this.http.get(`${this.baseUrl}/${type}`, { responseType: 'blob' });
   }
 }

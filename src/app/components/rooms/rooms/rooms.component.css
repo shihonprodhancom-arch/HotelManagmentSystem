@@ -212,7 +212,24 @@
   margin-right: 5px;
   margin-bottom: 5px;
 }
-
+.av-tag {
+  display: inline-block;
+  background: #25aae7;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+.bo-tag {
+  display: inline-block;
+  background: #e7253f;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
 .room-actions {
   flex: 0 0 auto;
 }
