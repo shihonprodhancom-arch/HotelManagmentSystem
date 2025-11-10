@@ -28,6 +28,9 @@ export class BookingService {
   getAllBookings(): Observable<Booking[]> {
     return this.http.get<Booking[]>(this.apiUrl);
   }
+    getBookingsByRoom(roomNumber: string): Observable<Booking[]> {
+    return this.http.get<Booking[]>(`${this.apiUrl}/room/${roomNumber}`);
+  }
 
   addBooking(booking: Booking): Observable<Booking> {
     return this.http.post<Booking>(this.apiUrl, booking);

@@ -1,4 +1,70 @@
-<h2>Reports</h2>
-<button (click)="download('rooms')">Room Report</button>
-<button (click)="download('bookings')">Booking Report</button>
-<button (click)="download('payments')">Payment Report</button>
+<div class="container my-5">
+  <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-header bg-primary text-white text-center py-4">
+      <h2 class="mb-0"><i class="bi bi-journal-text me-2"></i>Booking Reports</h2>
+    </div>
+
+    <div class="card-body text-center">
+      <p class="lead mb-4">Generate and download your booking reports in your preferred format.</p>
+
+      <div class="d-flex justify-content-center flex-wrap gap-4 my-4">
+        <button 
+          [ngClass]="{'btn-active': activeReport === 'pdf'}"
+          class="btn btn-gradient btn-xl px-5 py-3 fw-bold shadow-sm rounded-pill"
+          (click)="downloadReport('pdf'); setActive('pdf')">
+          <i class="bi bi-file-earmark-pdf me-2"></i> PDF
+        </button>
+
+        <button 
+          [ngClass]="{'btn-active': activeReport === 'xlsx'}"
+          class="btn btn-gradient btn-xl px-5 py-3 fw-bold shadow-sm rounded-pill"
+          (click)="downloadReport('xlsx'); setActive('xlsx')">
+          <i class="bi bi-file-earmark-spreadsheet me-2"></i> Excel
+        </button>
+
+        <button 
+          [ngClass]="{'btn-active': activeReport === 'csv'}"
+          class="btn btn-gradient btn-xl px-5 py-3 fw-bold shadow-sm rounded-pill"
+          (click)="downloadReport('csv'); setActive('csv')">
+          <i class="bi bi-file-earmark-text me-2"></i> CSV
+        </button>
+      </div>
+
+      <!-- Loading spinner -->
+      <div *ngIf="loading" class="mt-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2 fw-bold text-primary">Downloading report...</p>
+      </div>
+
+      <!-- Error message -->
+      <div *ngIf="errorMessage" class="mt-3 alert alert-danger fw-bold">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Gradient Button Base */
+  .btn-gradient {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: white;
+    transition: transform 0.25s, box-shadow 0.25s, filter 0.25s;
+  }
+
+  /* Hover effect */
+  .btn-gradient:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    filter: brightness(1.1);
+  }
+
+  /* Active toggle effect */
+  .btn-active {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    filter: brightness(1.2);
+  }
+</style>

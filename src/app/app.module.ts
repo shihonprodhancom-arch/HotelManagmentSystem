@@ -29,6 +29,12 @@ import { AttendanceComponent } from './attendance/attendance.component';
 import { ServiceFormComponent } from './services/service-form/service-form.component';
 import { ServiceListComponent } from './services/service-list/service-list.component';
 import { ReportComponent } from './report/report.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { RoomBookingsComponent } from './components/rooms/room-bookings/room-bookings.component';
+
+
 
 @NgModule({
   declarations: [
@@ -51,7 +57,10 @@ import { ReportComponent } from './report/report.component';
     AttendanceComponent,
     ServiceFormComponent,
     ServiceListComponent,
-    ReportComponent
+    ReportComponent,
+    RoomBookingsComponent
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -60,7 +69,8 @@ import { ReportComponent } from './report/report.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    FullCalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

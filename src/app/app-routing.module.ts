@@ -25,11 +25,13 @@ import { AttendanceComponent } from './attendance/attendance.component';
 import { ServiceListComponent } from './services/service-list/service-list.component';
 import { ServiceFormComponent } from './services/service-form/service-form.component';
 import { ReportComponent } from './report/report.component';
+import { RoomBookingsComponent } from './components/rooms/room-bookings/room-bookings.component';
 
 const routes: Routes = [
   // Auth routes
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: RegistrationComponent },
+  { path: 'cal', component: RoomBookingsComponent },
 
   // Sidebar routes
   {
@@ -45,7 +47,7 @@ const routes: Routes = [
       { path: 'staff-management', component: StaffListComponent },
       { path: 'staff/add', component: StaffFormComponent },
       { path: 'attendance', component: AttendanceComponent },
-  { path: 'reports', component: ReportComponent },
+      { path: 'reports', component: ReportComponent },
       // ✅ Extra Services
       { path: 'services', component: ServiceListComponent },
       { path: 'services/add', component: ServiceFormComponent },
