@@ -1,0 +1,20 @@
+/* Gradient Button Base */
+.btn-gradient {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  color: white;
+  transition: transform 0.25s, box-shadow 0.25s, filter 0.25s;
+}
+
+/* Hover effect */
+.btn-gradient:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+  filter: brightness(1.1);
+}
+
+/* Active toggle effect */
+.btn-active {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  filter: brightness(1.2);
+}

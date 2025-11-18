@@ -12,30 +12,46 @@ export class ReportComponent {
   loading: boolean = false;
   errorMessage: string = '';
 
+  activeBookingFormat: string = '';
+  activeAttendanceFormat: string = '';
+
   constructor(private http: HttpClient) {}
 
-  downloadReport(format: string) {
+  downloadBookingReport(format: string) {
     this.loading = true;
     this.errorMessage = '';
-
     const url = `http://localhost:9092/api/reports/bookings/${format}`;
 
     this.http.get(url, { responseType: 'blob' }).subscribe({
       next: (response: Blob) => {
-        const fileName = `booking-report.${format}`;
-        saveAs(response, fileName);
+        saveAs(response, `booking-report.${format}`);
+        this.activeBookingFormat = format;
         this.loading = false;
       },
       error: (err) => {
-        console.error('Report download failed:', err);
-        this.errorMessage = 'Report download failed. Please try again!';
+        console.error('Booking report failed:', err);
+        this.errorMessage = 'Booking report download failed!';
         this.loading = false;
       }
     });
   }
-  activeReport: string = '';
 
-setActive(format: string) {
-  this.activeReport = format;
-}
+  downloadAttendanceReport(format: string) {
+    this.loading = true;
+    this.errorMessage = '';
+    const url = `http://localhost:9092/api/reports/attendance/${format}`;
+
+    this.http.get(url, { responseType: 'blob' }).subscribe({
+      next: (response: Blob) => {
+        saveAs(response, `attendance-report.${format}`);
+        this.activeAttendanceFormat = format;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Attendance report failed:', err);
+        this.errorMessage = 'Attendance report download failed!';
+        this.loading = false;
+      }
+    });
+  }
 }

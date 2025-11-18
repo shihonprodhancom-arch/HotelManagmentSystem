@@ -262,33 +262,158 @@ export class BookingComponent implements OnInit {
     return '-';
   }
 
-  printReceipt(booking: Booking) {
-    const receiptWindow = window.open('', 'PRINT', 'height=600,width=800');
-    receiptWindow?.document.write(`
-      <html>
-        <head>
-          <title>Booking Receipt</title>
-          <style>
-            body { font-family: Arial, sans-serif; padding: 20px; }
-            h2 { text-align: center; }
-            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            table, th, td { border: 1px solid #000; padding: 10px; text-align: left; }
-          </style>
-        </head>
-        <body>
-          <h2>Hotel Booking Receipt</h2>
-          <table>
-            <tr><th>Guest Name</th><td>${booking.guestName}</td></tr>
-            <tr><th>Room Number</th><td>${booking.roomNumber}</td></tr>
-            <tr><th>Check-in</th><td>${booking.checkInDate}</td></tr>
-            <tr><th>Check-out</th><td>${booking.checkOutDate}</td></tr>
-            <tr><th>Payment Method</th><td>${booking.paymentMethod || '-'}</td></tr>
-            <tr><th>Payment Details</th><td>${this.formatPaymentInfo(booking.paymentInfo)}</td></tr>
-            <tr><th>Total Price</th><td>${booking.totalPrice} ৳</td></tr>
-          </table>
-          <script>window.print();</script>
-        </body>
-      </html>
-    `);
+printReceipt(booking: Booking) {
+  const receiptWindow = window.open('', '_blank', 'width=900,height=600');
+
+  if (!receiptWindow) {
+    alert("Popup blocked! Please allow popups for this site.");
+    return;
   }
+
+  receiptWindow.document.open();
+  receiptWindow.document.write(`
+    <html>
+      <head>
+        <title>Invoice - Booking Receipt</title>
+        <style>
+
+          body {
+            font-family: "Poppins", Arial, sans-serif;
+            background: #f2f2f2;
+            margin: 0;
+            padding: 25px;
+          }
+
+          .invoice-box {
+            background: #fff;
+            max-width: 750px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+          }
+
+          .top-bar {
+            background: #2d3436;
+            color: white;
+            padding: 18px;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+            font-size: 24px;
+            letter-spacing: 1px;
+          }
+
+          .section-title {
+            margin-top: 25px;
+            font-size: 17px;
+            font-weight: 600;
+            border-bottom: 2px solid #444;
+            padding-bottom: 5px;
+          }
+
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 15px;
+          }
+
+          table tr td {
+            padding: 10px 5px;
+            border-bottom: 1px solid #eee;
+          }
+
+          .label {
+            font-weight: 600;
+            width: 180px;
+          }
+
+          .price-box {
+            margin-top: 25px;
+            padding: 15px;
+            background: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 17px;
+          }
+
+          .price-box .amount {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2d3436;
+          }
+
+          .footer {
+            margin-top: 25px;
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+          }
+
+          @media print {
+            body {
+              background: white;
+              padding: 0;
+            }
+            .invoice-box {
+              box-shadow: none;
+              border: none;
+              margin: 0;
+              width: 100%;
+              padding: 0;
+            }
+          }
+
+        </style>
+      </head>
+
+      <body>
+        <div class="invoice-box">
+
+          <div class="top-bar">🏨SK HOTEL BOOKING INVOICE</div>
+
+          <div class="section-title">Customer Details</div>
+          <table>
+            <tr><td class="label">Guest Name</td><td>${booking.guestName}</td></tr>
+            <tr><td class="label">Room Number</td><td>${booking.roomNumber}</td></tr>
+          </table>
+
+          <div class="section-title">Booking Details</div>
+          <table>
+            <tr><td class="label">Check-in Date</td><td>${booking.checkInDate}</td></tr>
+            <tr><td class="label">Check-out Date</td><td>${booking.checkOutDate}</td></tr>
+          </table>
+
+          <div class="section-title">Payment Details</div>
+          <table>
+            <tr><td class="label">Payment Method</td><td>${booking.paymentMethod || '-'}</td></tr>
+            <tr><td class="label">Payment Info</td><td>${this.formatPaymentInfo(booking.paymentInfo)}</td></tr>
+          </table>
+
+          <div class="price-box">
+            Total Amount Payable:  
+            <span class="amount">${booking.totalPrice} ৳</span>
+          </div>
+
+          <div class="footer">
+            Thank you for your stay! This invoice is generated electronically and does not require any signature.
+          </div>
+
+        </div>
+
+        <script>
+          window.onload = function() {
+            window.print();
+          }
+        </script>
+
+      </body>
+    </html>
+  `);
+
+  receiptWindow.document.close();
+}
+
+
 }
